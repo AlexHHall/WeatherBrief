@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('Montserrat-Regular.ttf');
+    src: url('src/font/static/Montserrat-Bold.ttf');
 }
 
 @keyframes cloudsize {
@@ -22,7 +22,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color: #C7EBFF;
     margin: 0;
     padding: 0;
@@ -99,7 +99,7 @@ body {
 }
 
 .lightbackground {
-    background-color: gray;
+    background-color: lightblue;
     /* box in the center of the screen */
     position: fixed;
     top: 50%;
@@ -107,19 +107,67 @@ body {
     transform: translate(-50%, -50%);
     width: 90%;
     height: 90%;
-    border: 1px solid black;
+    border: 5px solid black;
     border-radius: 1rem;
     padding: 5px;
     margin: 5px;
-    opacity: 0.8;
+    opacity: 0.6;
 }
+
+.widgetcontainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    grid-auto-rows: 1fr;
+}
+
+.widgetcontainer::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
+  
+  .widgetcontainer > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
+  
+  /* Just to make the grid visible */
+  
+  .widgetcontainer > * {
+    background: rgba(0,0,0,0.1);
+    border: 1px white solid;
+  }
 
 .title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.4rem;
     margin: 1rem;
     opacity: 1;
-    color:#0000FF;
-    border: 1px solid black;
-    font-family: 'Montserrat', sans-serif;
+    color:#FFFFFF;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    display: block;
+}
+
+.widget {
+    background-color: rgba(255, 127, 127, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 1rem;
+    width: auto;
+    aspect-ratio: 1;
+}
+
+.circlewidget {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 50%;
+    width: auto;
+    aspect-ratio: 1;
 }

@@ -6,7 +6,7 @@ function randomIntFromInterval(min, max) { // min and max included
 function generateClouds() {
     console.log('Generating Clouds')
     const container = document.getElementById('clouds');
-    for (let i = 0; i < randomIntFromInterval(200, 300); i++) {
+    for (let i = 0; i < randomIntFromInterval(400, 500); i++) {
         const cloud = document.createElement('div');
         cloud.classList.add('cloud');
         cloud.style.left = `${randomIntFromInterval(-50, 150)}%`;
