@@ -1,0 +1,125 @@
+* {
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('Montserrat-Regular.ttf');
+}
+
+@keyframes cloudsize {
+    0% {width: 140px; height:140px}
+    25% {width: 90px; height:90px;}
+    50% {width: 120px; height:120px;}
+    75% {width: 90px; height:90px;}
+    100% {width: 140px; height: 140px;}
+  }
+
+@keyframes raindrop {
+    0% {top: 0px; opacity: 0;}
+    50% {top: 1000px; opacity: 1;}
+    100% {top: 1080px; opacity: 0;}
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #C7EBFF;
+    margin: 0;
+    padding: 0;
+    width: 1920px;
+    height: 1080px;
+    position: fixed;
+}
+
+.cloud {
+        background-color: #afafaf;
+        border-radius: 50%;
+        position: fixed;
+        animation-name: cloudsize;
+        animation-duration: 25s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        opacity: 0.7;
+}
+
+.sun {
+    background-color: #FFD700;
+    border-radius: 50%;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -100px;
+}
+
+.rain {
+    background-color: #0000FF;
+    width: 2px;
+    height: 10px;
+    position: fixed;
+    animation-name: raindrop;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(45deg);
+}
+
+.optionsswitch {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    width: 3rem;
+    height: 1rem;
+    transition: 0.5s;
+    opacity: 0.7;
+}
+
+.off {
+    background-color: lightcoral;
+}
+
+.on {
+    background-color: limegreen;
+}
+
+.optionsswitchinside {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: white;
+    transition: 0.5s;
+    left: 65%;
+}
+
+.lightbackground {
+    background-color: gray;
+    /* box in the center of the screen */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 5px;
+    margin: 5px;
+    opacity: 0.8;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem;
+    opacity: 1;
+    color:#0000FF;
+    border: 1px solid black;
+    font-family: 'Montserrat', sans-serif;
+}
