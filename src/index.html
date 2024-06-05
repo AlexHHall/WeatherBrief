@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
     <title>meteorology or smth</title>
-    <script src="animations.js"></script>
-    <script src="widgets.js"></script>
+    <script src="/animations.js"></script>
+    <script src="/widgets.js"></script>
+    <link rel='icon' href='favicon.ico' class='js-favicon'>
+
 </head>
 <body>
     <div class="container">
@@ -18,9 +20,24 @@
             <div id="animationswitch" class="optionsswitch on"><div id="animationswitchinside" class="optionsswitchinside on"></div></div>
             <div id="lightbackground" class="lightbackground">
                 <u><h1 class="title">Weather Brief</h1></u>
-                <div class="widgetcontainer">
-                    <div id="wind-widget" class="widget"></div>
+                <div class="airporttypeselector">
+                    <button id="auto" class="typeselectorbutton">Auto</button>
+                    <button id="manual" class="typeselectorbutton selected">Manual</button>
                 </div>
+                <div id="manualcontainer">
+                    <div class="typeselector">
+                        <button id="metarbutton" class="typeselectorbutton manualtypeselectorbutton selected">METAR</button>
+                        <button id="tafbutton" class="typeselectorbutton manualtypeselectorbutton">TAF</button>
+                        <button id="atisbutton" class="typeselectorbutton manualtypeselectorbutton">ATIS</button>
+                    </div>
+                </div>
+                <div id="autocontainer" style="display: none;">
+                    <div class="airportselection">
+                        <input type="text" id="airportinput" class="airportinput" placeholder="Enter ICAO code">
+                        <button id="airportbutton" class="airportbutton airportinput">Go</button>
+                    </div>
+                </div>
+
             </div>
 
         </div>

@@ -107,4 +107,31 @@ window.onload = function () {
             clearInterval(rainAnimation);
         }
     });
+    // two buttons, auto and manual, make one selected and the other not
+    const auto = document.getElementById('auto');
+    const manual = document.getElementById('manual');
+    auto.addEventListener('click', function() {
+        auto.classList.add('selected');
+        manual.classList.remove('selected');
+        document.getElementById('autocontainer').style.display = 'block';
+        document.getElementById('manualcontainer').style.display = 'none';
+        console.log('test??');
+    });
+    manual.addEventListener('click', function() {
+        manual.classList.add('selected');
+        auto.classList.remove('selected');
+        document.getElementById('manualcontainer').style.display = 'block';
+        document.getElementById('autocontainer').style.display = 'none';
+    });
+
+
+    const manualtypeselects = document.querySelectorAll('.manualtypeselectorbutton');
+    manualtypeselects.forEach(typeselect => {
+        typeselect.addEventListener('click', function() {
+            manualtypeselects.forEach(other => {
+                other.classList.remove('selected');
+            });
+            typeselect.classList.add('selected');
+        });
+    });
 }

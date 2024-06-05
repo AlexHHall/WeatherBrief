@@ -171,3 +171,48 @@ body {
     width: auto;
     aspect-ratio: 1;
 }
+
+.airporttypeselector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));;
+    grid-auto-rows: 1fr;
+}
+
+.typeselector {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));;
+    grid-auto-rows: 1fr;
+}
+
+.typeselectorbutton {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 1rem;
+    cursor: pointer;
+    width: auto;
+    border: 1px solid transparent;
+    margin: 5px;
+
+}
+
+.selected {
+    background-color: rgba(127, 255, 127, 0.8);
+}
+
+.airportselection {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));;
+    grid-auto-rows: 1fr;
+}
+
+.airportinput {
+    border-radius: 1rem;
+    display: inline-block;
+    border: 1px solid transparent;
+    margin: 5px;
+    padding: 10px 15px;
+
+}
