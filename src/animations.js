@@ -128,10 +128,31 @@ window.onload = function () {
     const manualtypeselects = document.querySelectorAll('.manualtypeselectorbutton');
     manualtypeselects.forEach(typeselect => {
         typeselect.addEventListener('click', function() {
-            manualtypeselects.forEach(other => {
-                other.classList.remove('selected');
-            });
-            typeselect.classList.add('selected');
+            // toggle between selected and not selected
+            typeselect.classList.toggle('selected');
         });
     });
-}
+    const manualmetarbutton = document.getElementById('manualmetarbutton');
+    manualmetarbutton.addEventListener('click', function() {
+        const manualmetar = document.getElementById('manualmetar');
+        manualmetar.style.display = manualmetarbutton.classList.contains("selected") ? 'block' : 'none';
+    });
+    const manualtafbutton = document.getElementById('manualtafbutton');
+    manualtafbutton.addEventListener('click', function() {
+        const manualtaf = document.getElementById('manualtaf');
+        manualtaf.style.display = manualtafbutton.classList.contains("selected") ? 'block' : 'none';
+    });
+    const manualatisbutton = document.getElementById('manualatisbutton');
+    manualatisbutton.addEventListener('click', function() {
+        const manualatis = document.getElementById('manualatis');
+        manualatis.style.display = manualatisbutton.classList.contains("selected") ? 'block' : 'none';
+    });
+
+    airportbutton = document.getElementById('airportbutton');
+    airportbutton.addEventListener('click', () => {
+        const airportInput = document.getElementById('airportinput');
+        const airportCode = airportInput.value;
+        console.log(airportCode);
+        // get weather data from airport code weather api
+        
+})};

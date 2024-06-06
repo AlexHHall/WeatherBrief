@@ -7,4 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const circle = document.createElement('div');
     circle.classList.add('circlewidget');
     windSpeed.appendChild(circle);
+
+
 });

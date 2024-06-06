@@ -19,17 +19,36 @@
             <div id="rain"></div>
             <div id="animationswitch" class="optionsswitch on"><div id="animationswitchinside" class="optionsswitchinside on"></div></div>
             <div id="lightbackground" class="lightbackground">
-                <u><h1 class="title">Weather Brief</h1></u>
+                <h1 class="title">Weather Brief</h1>
                 <div class="airporttypeselector">
                     <button id="auto" class="typeselectorbutton">Auto</button>
                     <button id="manual" class="typeselectorbutton selected">Manual</button>
                 </div>
                 <div id="manualcontainer">
                     <div class="typeselector">
-                        <button id="metarbutton" class="typeselectorbutton manualtypeselectorbutton selected">METAR</button>
-                        <button id="tafbutton" class="typeselectorbutton manualtypeselectorbutton">TAF</button>
-                        <button id="atisbutton" class="typeselectorbutton manualtypeselectorbutton">ATIS</button>
+                        <button id="manualmetarbutton" class="typeselectorbutton manualtypeselectorbutton selected">METAR</button>
+                        <button id="manualtafbutton" class="typeselectorbutton manualtypeselectorbutton selected" >TAF</button>
+                        <button id="manualatisbutton" class="typeselectorbutton manualtypeselectorbutton selected">ATIS</button>
                     </div>
+                    <div class="weather-container">
+                        <div id="manualmetar" class="weather-widget-container">
+                            <h1 class="title">Metar Decoder</h1>
+                            <input type="text" placeholder="Enter Metar" class="wxbriefinput" id="metarinput"></input>
+                            <button id="metarbutton" class="wxbriefbutton">Go</button>
+                        </div>
+                        <div id="manualtaf" class="weather-widget-container">
+                            <h1 class="title">TAF Decoder</h1>
+                            <span contenteditable="true" role="textbox">
+                                <input type="text" placeholder="Enter TAF" class="wxbriefinput" id="tafinput" style="max-height: min-content;"></input>
+
+                            </span>
+                            <button id="metarbutton" class="wxbriefbutton">Go</button>
+                        </div>
+                        <div id="manualatis" class="weather-widget-container">
+                            <h1 class="title">ATIS Decoder</h1>
+                        </div>
+                    </div>
+
                 </div>
                 <div id="autocontainer" style="display: none;">
                     <div class="airportselection">

@@ -112,6 +112,7 @@ body {
     padding: 5px;
     margin: 5px;
     opacity: 0.6;
+    overflow-y: scroll;
 }
 
 .widgetcontainer {
@@ -142,7 +143,7 @@ body {
 
 .title {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     margin: 1rem;
     opacity: 1;
     color:#FFFFFF;
@@ -174,13 +175,13 @@ body {
 
 .airporttypeselector {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
 }
 
 .typeselector {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: 1fr;
 }
 
@@ -188,14 +189,13 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 10px;
-    font-size: 30px;
+    font-size: 1.2rem;
     text-align: center;
     border-radius: 1rem;
     cursor: pointer;
     width: auto;
     border: 1px solid transparent;
     margin: 5px;
-
 }
 
 .selected {
@@ -213,6 +213,68 @@ body {
     display: inline-block;
     border: 1px solid transparent;
     margin: 5px;
-    padding: 10px 15px;
+    padding: 0.8rem;
+}
 
+.airportbutton {
+    cursor: pointer;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+
+
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 1rem;
+    margin: 5px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 1rem;
+
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.weather-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+
+}
+
+
+.weather-widget-container {
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.wxbriefinput {
+    border-radius: 1rem;
+    display: inline-block;
+    border: 1px solid transparent;
+    margin: 5px;
+    padding: 0.8rem;
+    width: 80%;
+}
+
+.wxbriefbutton {
+    cursor: pointer;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+    padding: 0.8rem;
+    width: 10%;
 }
