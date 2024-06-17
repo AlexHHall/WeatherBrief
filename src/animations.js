@@ -4,7 +4,6 @@ function randomIntFromInterval(min, max) { // min and max included
 
 // Generate Clouds
 function generateClouds() {
-    console.log('Generating Clouds')
     const container = document.getElementById('clouds');
     for (let i = 0; i < randomIntFromInterval(400, 500); i++) {
         const cloud = document.createElement('div');
@@ -17,7 +16,6 @@ function generateClouds() {
         cloud.style.animation = `cloudsize ${randomIntFromInterval(60, 120)}s linear infinite`;
         brightness = (randomIntFromInterval(245, 255));
         difference = randomIntFromInterval(0, 2);
-        console.log(brightness)
         cloud.style.backgroundColor = `rgb(${brightness+((Math.random()-0.5) * difference)}, ${brightness+((Math.random()-0.5) * difference)}, ${brightness+((Math.random()-0.5) * difference)})`;
         cloud.style.borderRadius = '50%';
         cloud.style.position = 'absolute';
@@ -26,7 +24,6 @@ function generateClouds() {
 }
 
 function generateRain() {
-    console.log('Generating Rain')
     const container = document.getElementById('rain');
     for (let i = 0; i < randomIntFromInterval(100, 2000); i++) {
         const rain = document.createElement('div');
@@ -75,10 +72,33 @@ function animateRain() {
     });
 }
 
+function atisToText(atis) {
+    // convert atis to text
+    // atis is a json object
+    // "ATIS": {
+    //    "ICAO": "NZRO",
+    //    "INFO": "D",
+    //    "ISSUE_TIME": "0004",
+    //    "APPROACH": "RNP Z",
+    //    "RUNWAY": "18",
+    //    "RWY_COND": "6/6/6 DRY/DRY/DRY",
+    //    "WIND": "VRB /4KT",
+    //    "VIS": "30KM",
+    //    "CLOUD": "FEW 2000 FT OVC 2500 FT",
+    //    "TEMPERATURE": "12",
+    //    "DEWPOINT": "10",
+    //    "QNH": "1026hPa",
+    //    "2000 FT WIND": "FORECAST VRB/05KT",
+    //    "REMARKS": "ON FIRST CTC WITH NZRO TWR NOTIFY RCPT OF D"
+    //}
+    // return a string
+    return `ATIS for ${atis["ICAO"]}.<br>Issued at ${atis["ISSUE_TIME"]}Z.<br>Approach is ${atis["APPROACH"]} for runway ${atis["RUNWAY"]}.<br>Runway conditions are ${atis["RWY_COND"]}.<br>Wind is ${atis["WIND"]}.<br>Visibility is ${atis["VIS"]}.<br>Clouds are ${atis["CLOUD"]}.<br>Temperature is ${atis["TEMPERATURE"]} degrees Celsius. Dewpoint is ${atis["DEWPOINT"]} degrees Celsius.<br>QNH is ${atis["QNH"]}.<br>Wind at 2000 feet is ${atis["2000 FT WIND"]}.<br>Remarks: ${atis["REMARKS"]}`;
+}
+
+
 
 
 window.onload = function () {
-    console.log('Window Loaded');
     var cloudsAnimation;
     var rainAnimation;
 
@@ -87,7 +107,6 @@ window.onload = function () {
     cloudsAnimation = setInterval(animateClouds, 1000/60);
     rainAnimation = setInterval(animateRain, 1000/60);
     document.getElementById('animationswitch').addEventListener('click', function() {
-        console.log('Switching Animation');
         const buttoninside = document.getElementById('animationswitchinside');
         const button = document.getElementById('animationswitch');
         // remove 'off' class and add 'on' class or the opposite
@@ -97,12 +116,10 @@ window.onload = function () {
         buttoninside.style.left = button.classList.contains('off') ? '5%' : '65%';
         document.getElementById('rain').style.display = button.classList.contains('off') ? 'none' : 'block';
         if (button.classList.contains('on')) {
-            console.log("Animation On")
 
             cloudsAnimation = setInterval(animateClouds, 1000/60);
             rainAnimation = setInterval(animateRain, 1000/60);
         } else {
-            console.log('Animation Switched Off')
             clearInterval(cloudsAnimation);
             clearInterval(rainAnimation);
         }
@@ -115,7 +132,6 @@ window.onload = function () {
         manual.classList.remove('selected');
         document.getElementById('autocontainer').style.display = 'block';
         document.getElementById('manualcontainer').style.display = 'none';
-        console.log('test??');
     });
     manual.addEventListener('click', function() {
         manual.classList.add('selected');
@@ -148,11 +164,84 @@ window.onload = function () {
         manualatis.style.display = manualatisbutton.classList.contains("selected") ? 'block' : 'none';
     });
 
+    const autoatisbutton = document.getElementById('autoatisbutton');
+    autoatisbutton.addEventListener('click', function() {
+        autoatisbutton.classList.toggle('selected');
+    });
+    const autometarbutton = document.getElementById('autometarbutton');
+    autometarbutton.addEventListener('click', function() {
+        autometarbutton.classList.toggle('selected');
+    });
+    const autotafbutton = document.getElementById('autotafbutton');
+    autotafbutton.addEventListener('click', function() {
+        autotafbutton.classList.toggle('selected');
+    });
+
+    const autoairportselectionform = document.getElementById('airportselection');
+    function handleForm(event) { 
+        event.preventDefault();
+        document.getElementById('airportinput').value = ''; 
+    } 
+    autoairportselectionform.addEventListener('submit', handleForm);
+
     airportbutton = document.getElementById('airportbutton');
     airportbutton.addEventListener('click', () => {
         const airportInput = document.getElementById('airportinput');
         const airportCode = airportInput.value;
-        console.log(airportCode);
-        // get weather data from airport code weather api
-        
+        // make a fetch request with no cors
+        // include metar, taf, atis if selected
+        _includeatis = autoatisbutton.classList.contains('selected') ?  "true" : "false";
+        _includemetar = autometarbutton.classList.contains('selected') ?  "true" : "false";
+        _includetaf = autotafbutton.classList.contains('selected') ?  "true" : "false";
+        fetch("http://localhost:3001/airport/met/" + airportCode + "?" + new URLSearchParams({
+            includemetar:  _includemetar,
+            includetaf: _includetaf,
+            includeatis: _includeatis
+        })).then(response => response.json()).then(data => {
+            console.log(data);
+            // display metar, taf, atis in 'autodisplay' div
+            const autodisplay = document.getElementById('autometdisplay');
+            const airport = document.createElement('div');
+            airport.classList.add('autoairport');
+            const header = document.createElement('div');
+            header.classList.add('autoairportheader')
+            const title = document.createElement('h2');
+            const closebutton = document.createElement('button');
+            closebutton.innerHTML = 'X';
+            closebutton.addEventListener('click', function() {
+                airport.remove();
+            }
+            );
+            title.innerHTML = airportCode;
+            header.appendChild(title);
+            header.appendChild(closebutton);
+            airport.appendChild(header);
+            airport.id = airportCode;
+            const itemscontainer = document.createElement('div');
+            itemscontainer.classList.add('autoairportcontainer');
+            if (_includemetar === "true") {
+                const metar = document.createElement('div');
+                metar.innerHTML = data["METAR"];
+                metar.classList.add('autoairportinfobox');
+                itemscontainer.appendChild(metar);
+            }
+            if (_includetaf === "true") {
+                const taf = document.createElement('div');
+                taf.innerHTML = data["TAF"];
+                taf.classList.add('autoairportinfobox');
+                itemscontainer.appendChild(taf);
+            }
+            if (_includeatis === "true") {
+                const atis = document.createElement('div');
+                atis.innerHTML = atisToText(data["ATIS"]);
+                atis.classList.add('autoairportinfobox');
+                itemscontainer.appendChild(atis);
+
+            }
+
+            airport.appendChild(itemscontainer);
+            autodisplay.appendChild(airport);
+
+
+        });        
 })};

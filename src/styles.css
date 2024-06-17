@@ -204,7 +204,7 @@ body {
 
 .airportselection {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));;
+    grid-template-columns: repeat(3, minmax(0, 1fr));;
     grid-auto-rows: 1fr;
 }
 
@@ -277,4 +277,81 @@ body {
     border: 1px solid transparent;
     padding: 0.8rem;
     width: 10%;
+}
+
+.autotypeselectorcontainer {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+}
+
+.autotypeselectorbutton {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 1rem;
+    cursor: pointer;
+    width: auto;
+    border: 1px solid transparent;
+    margin: 5px;
+}
+
+.autoairport {
+    align-items: center;
+    background-color: rgba(63, 63, 63, 0.5);
+    text-align: center;
+    border-radius: 1rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    margin: 5px;
+}
+
+.autoairportheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.autoairportheader button {
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    color: #FF0000;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    width: auto;
+    border: 1px solid transparent;
+    margin: 5px;
+    aspect-ratio: 1;
+}
+
+.autoairport h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 1rem;
+    width: auto;
+    margin: 5px;
+}
+
+.autoairportcontainer {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.autoairportinfobox {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 1rem;
+    width: auto;
+    margin: 5px;
 }

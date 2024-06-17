@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <title>meteorology or smth</title>
     <script src="/animations.js"></script>
-    <script src="/widgets.js"></script>
     <link rel='icon' href='favicon.ico' class='js-favicon'>
 
 </head>
@@ -21,10 +20,10 @@
             <div id="lightbackground" class="lightbackground">
                 <h1 class="title">Weather Brief</h1>
                 <div class="airporttypeselector">
-                    <button id="auto" class="typeselectorbutton">Auto</button>
-                    <button id="manual" class="typeselectorbutton selected">Manual</button>
+                    <button id="auto" class="typeselectorbutton selected">Auto</button>
+                    <button id="manual" class="typeselectorbutton">Manual</button>
                 </div>
-                <div id="manualcontainer">
+                <div id="manualcontainer"  style="display: none;">
                     <div class="typeselector">
                         <button id="manualmetarbutton" class="typeselectorbutton manualtypeselectorbutton selected">METAR</button>
                         <button id="manualtafbutton" class="typeselectorbutton manualtypeselectorbutton selected" >TAF</button>
@@ -50,10 +49,18 @@
                     </div>
 
                 </div>
-                <div id="autocontainer" style="display: none;">
-                    <div class="airportselection">
+                <div id="autocontainer">
+                    <form id="airportselection" class="airportselection">
                         <input type="text" id="airportinput" class="airportinput" placeholder="Enter ICAO code">
-                        <button id="airportbutton" class="airportbutton airportinput">Go</button>
+                        <div id="autotypes-selector" class="autotypeselectorcontainer">
+                            <button type="button" id="autoatisbutton" class="autotypeselectorbutton selected">ATIS</button>
+                            <button type="button" id="autometarbutton" class="autotypeselectorbutton selected">METAR</button>
+                            <button type="button"id="autotafbutton" class="autotypeselectorbutton selected">TAF</button>
+                        </div>
+                        <button type="submit" id="airportbutton" class="airportbutton airportinput">Add Airport</button>
+                    </form>
+                    <div id="autometdisplay">
+
                     </div>
                 </div>
 

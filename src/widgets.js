@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded');
 
     // select wind-speed widget
     const windSpeed = document.getElementById('wind-widget');
