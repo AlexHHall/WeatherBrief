@@ -212,7 +212,7 @@ window.onload = function () {
                 airport.remove();
             }
             );
-            title.innerHTML = airportCode;
+            title.innerHTML = airportCode.toUpperCase();
             header.appendChild(title);
             header.appendChild(closebutton);
             airport.appendChild(header);
@@ -227,7 +227,7 @@ window.onload = function () {
             }
             if (_includetaf === "true") {
                 const taf = document.createElement('div');
-                taf.innerHTML = data["TAF"];
+                taf.innerHTML = data["TAF"].replace(/\n/g, "<br />");;
                 taf.classList.add('autoairportinfobox');
                 itemscontainer.appendChild(taf);
             }
