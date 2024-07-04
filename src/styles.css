@@ -1,357 +1,410 @@
 * {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url('src/font/static/Montserrat-Bold.ttf');
+  font-family: "Montserrat";
+  src: url("src/font/static/Montserrat-Bold.ttf");
 }
 
 @keyframes cloudsize {
-    0% {width: 140px; height:140px}
-    25% {width: 90px; height:90px;}
-    50% {width: 120px; height:120px;}
-    75% {width: 90px; height:90px;}
-    100% {width: 140px; height: 140px;}
+  0% {
+    width: 140px;
+    height: 140px;
   }
+  25% {
+    width: 90px;
+    height: 90px;
+  }
+  50% {
+    width: 120px;
+    height: 120px;
+  }
+  75% {
+    width: 90px;
+    height: 90px;
+  }
+  100% {
+    width: 140px;
+    height: 140px;
+  }
+}
 
 @keyframes raindrop {
-    0% {top: 0px; opacity: 0;}
-    50% {top: 1000px; opacity: 1;}
-    100% {top: 1080px; opacity: 0;}
+  0% {
+    top: 0px;
+    opacity: 0;
+  }
+  50% {
+    top: 1000px;
+    opacity: 1;
+  }
+  100% {
+    top: 1080px;
+    opacity: 0;
+  }
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #C7EBFF;
-    margin: 0;
-    padding: 0;
-    width: 1920px;
-    height: 1080px;
-    position: fixed;
+  font-family: "Montserrat", sans-serif;
+  background-color: #c7ebff;
+  margin: 0;
+  padding: 0;
+  width: 1920px;
+  height: 1080px;
+  position: fixed;
 }
 
 .cloud {
-        background-color: #afafaf;
-        border-radius: 50%;
-        position: fixed;
-        animation-name: cloudsize;
-        animation-duration: 25s;
-        animation-iteration-count: infinite;
-        animation-timing-function: ease-in-out;
-        opacity: 0.7;
+  background-color: #afafaf;
+  border-radius: 50%;
+  position: fixed;
+  animation-name: cloudsize;
+  animation-duration: 25s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  opacity: 0.7;
 }
 
 .sun {
-    background-color: #FFD700;
-    border-radius: 50%;
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    top: -100px;
-    right: -100px;
+  background-color: #ffd700;
+  border-radius: 50%;
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  right: -100px;
 }
 
 .rain {
-    background-color: #0000FF;
-    width: 2px;
-    height: 10px;
-    position: fixed;
-    animation-name: raindrop;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    border-radius: 0 50% 50% 50%;
-    transform: rotate(45deg);
+  background-color: #0000ff;
+  width: 2px;
+  height: 10px;
+  position: fixed;
+  animation-name: raindrop;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
 }
 
 .optionsswitch {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    border: 1px solid black;
-    border-radius: 1rem;
-    padding: 5px;
-    margin: 5px;
-    cursor: pointer;
-    width: 3rem;
-    height: 1rem;
-    transition: 0.5s;
-    opacity: 0.7;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  width: 3rem;
+  height: 1rem;
+  transition: 0.5s;
+  opacity: 0.7;
 }
 
 .off {
-    background-color: lightcoral;
+  background-color: lightcoral;
 }
 
 .on {
-    background-color: limegreen;
+  background-color: limegreen;
 }
 
 .optionsswitchinside {
-    position: absolute;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background-color: white;
-    transition: 0.5s;
-    left: 65%;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: white;
+  transition: 0.5s;
+  left: 65%;
 }
 
 .lightbackground {
-    background-color: lightblue;
-    /* box in the center of the screen */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    height: 90%;
-    border: 5px solid black;
-    border-radius: 1rem;
-    padding: 5px;
-    margin: 5px;
-    opacity: 0.6;
-    overflow-y: scroll;
+  background-color: lightblue;
+  /* box in the center of the screen */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  border: 5px solid black;
+  border-radius: 1rem;
+  padding: 5px;
+  margin: 5px;
+  opacity: 0.6;
+  overflow-y: scroll;
 }
 
 .widgetcontainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-    grid-auto-rows: 1fr;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .widgetcontainer::before {
-    content: '';
-    width: 0;
-    padding-bottom: 100%;
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
-  
-  .widgetcontainer > *:first-child {
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
-  
-  /* Just to make the grid visible */
-  
-  .widgetcontainer > * {
-    background: rgba(0,0,0,0.1);
-    border: 1px white solid;
-  }
+  content: "";
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.widgetcontainer > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+/* Just to make the grid visible */
+
+.widgetcontainer > * {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px white solid;
+}
 
 .title {
-    text-align: center;
-    font-size: 2.8rem;
-    margin: 1rem;
-    opacity: 1;
-    color:#FFFFFF;
-    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-    display: block;
+  text-align: center;
+  font-size: 2.8rem;
+  margin: 1rem;
+  opacity: 1;
+  color: #ffffff;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  display: block;
 }
 
 .widget {
-    background-color: rgba(255, 127, 127, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
-    border-radius: 1rem;
-    width: auto;
-    aspect-ratio: 1;
+  background-color: rgba(255, 127, 127, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 1rem;
+  width: auto;
+  aspect-ratio: 1;
 }
 
 .circlewidget {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-size: 30px;
-    text-align: center;
-    border-radius: 50%;
-    width: auto;
-    aspect-ratio: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 50%;
+  width: auto;
+  aspect-ratio: 1;
 }
 
 .airporttypeselector {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .typeselector {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .typeselectorbutton {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-size: 1.2rem;
-    text-align: center;
-    border-radius: 1rem;
-    cursor: pointer;
-    width: auto;
-    border: 1px solid transparent;
-    margin: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 1rem;
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  margin: 5px;
 }
 
 .selected {
-    background-color: rgba(127, 255, 127, 0.8);
+  background-color: rgba(127, 255, 127, 0.8);
 }
 
 .airportselection {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));;
-    grid-auto-rows: 1fr;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .airportinput {
-    border-radius: 1rem;
-    display: inline-block;
-    border: 1px solid transparent;
-    margin: 5px;
-    padding: 0.8rem;
+  border-radius: 1rem;
+  display: inline-block;
+  border: 1px solid transparent;
+  margin: 5px;
+  padding: 0.8rem;
 }
 
 .airportbutton {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    border-radius: 1rem;
-    margin: 5px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 1rem;
-
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-
-.weather-container {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
-
+  width: 10px;
 }
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 1rem;
+  margin: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.weather-container {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+}
 
 .weather-widget-container {
-    text-align: center;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 1rem;
-    background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .wxbriefinput {
-    border-radius: 1rem;
-    display: inline-block;
-    border: 1px solid transparent;
-    margin: 5px;
-    padding: 0.8rem;
-    width: 80%;
+  border-radius: 1rem;
+  display: inline-block;
+  border: 1px solid transparent;
+  margin: 5px;
+  padding: 0.8rem;
+  width: 80%;
 }
 
 .wxbriefbutton {
-    cursor: pointer;
-    border-radius: 1rem;
-    border: 1px solid transparent;
-    padding: 0.8rem;
-    width: 10%;
+  cursor: pointer;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  padding: 0.8rem;
+  width: 10%;
 }
 
 .autotypeselectorcontainer {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .autotypeselectorbutton {
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-size: 1.2rem;
-    text-align: center;
-    border-radius: 1rem;
-    cursor: pointer;
-    width: auto;
-    border: 1px solid transparent;
-    margin: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 1rem;
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  margin: 5px;
 }
 
 .autoairport {
-    align-items: center;
-    background-color: rgba(63, 63, 63, 0.5);
-    text-align: center;
-    border-radius: 1rem;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 30px;
-    margin: 5px;
+  align-items: center;
+  background-color: rgba(63, 63, 63, 0.5);
+  text-align: center;
+  border-radius: 1rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 30px;
+  margin: 5px;
 }
 
 .autoairportheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1rem;
 }
 
 .autoairportheader button {
-    border: 1px solid rgba(0, 0, 0, 0);
-    background-color: rgba(0, 0, 0, 0);
-    color: #FF0000;
-    padding: 10px;
-    font-size: 1.2rem;
-    border-radius: 1rem;
-    cursor: pointer;
-    width: auto;
-    border: 1px solid transparent;
-    margin: 5px;
-    aspect-ratio: 1;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  color: #ff0000;
+  padding: 10px;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  margin: 5px;
+  aspect-ratio: 1;
 }
 
 .autoairport h2 {
-    color: #fff;
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 1rem;
-    width: auto;
-    margin: 5px;
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 1rem;
+  width: auto;
+  margin: 5px;
 }
 
 .autoairportcontainer {
-    display: grid;
-    grid-auto-flow: column;
+  display: grid;
+  grid-auto-flow: column;
 }
 
 .autoairportinfobox {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-size: 1.2rem;
-    text-align: center;
-    border-radius: 1rem;
-    width: auto;
-    margin: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 0px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 1rem;
+  width: auto;
+  margin: 5px;
+}
+
+.closebutton {
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: #ff0000;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  margin: 1rem;
+  font-size: 1.8rem;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.collapsebutton {
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: #fff;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  width: auto;
+  border: 1px solid transparent;
+  margin: 1rem;
+  font-size: 1.8rem;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
