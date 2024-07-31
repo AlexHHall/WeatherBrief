@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        @font-face {
+            font-family: rwynumbers;
+            src: url(font/ICAORWYID.ttf);
+        }
+
+        .runwaysvg {
+            height:300px;
+        }
+        svg {
+            font-family: rwynumbers;
+
+            transform: translate(-150px, -150px) scale(0.5);
+            display: block;
+        }
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+    </style>
+    <script>
+        /* 
+        function rotate() {
+            let runway = document.getElementById("runway");
+            let arrow = document.getElementById("arrow");
+            let runwayDirection = document.getElementById("runwaydirection").value;
+            let windDirection = document.getElementById("winddirection").value;
+            runway.style.transform = `translate(-50%, -50%) rotate(${runwayDirection}deg) scaleY(2)`;
+            arrow.style.transform = `translate(-50%, -50%) rotate(${windDirection}deg) scaleX(0.6) scaleY(1.4) scale(1, -1)`;
+        }
+            */
+           window.onload = function () {
+            document.getElementById("thing").addEventListener("submit", function(event) {
+                event.preventDefault();
+                rotate();
+            });
+
+            document.getElementById("runwaydirection").addEventListener("input", function() {
+                rotate();
+            });
+
+            document.getElementById("winddirection").addEventListener("input", function() {
+                rotate();
+            });
+
+            }
+
+            function rotate() {
+                let runwaybase = document.getElementById("runwaybase");
+                let runwayline = document.getElementById("runwayline");
+                let runwaynum1 = document.getElementById("runwaynum1");
+                let runwaynum2 = document.getElementById("runwaynum2");
+                let runwayDirection = Number(document.getElementById("runwaydirection").value);
+                let windDirection = Number(document.getElementById("winddirection").value);
+                runwayDirection = runwayDirection % 36;
+                windDirection = windDirection % 360;
+                if (runwayDirection == 0) {
+                    runwayDirection = 36;
+                }
+                runwaybase.setAttribute("transform", `rotate(${runwayDirection*10}, 300, 300)`);
+                runwayline.setAttribute("transform", `rotate(${runwayDirection*10}, 300, 300)`);
+                runwaynum1.setAttribute("transform", `rotate(${runwayDirection*10}, 300, 300)`);
+                runwaynum2.setAttribute("transform", `rotate(${180+runwayDirection*10}, 300, 300)`);
+                runwaynum1.innerHTML = runwayDirection.toString().padStart(2, "0");
+                runwaynum2.innerHTML = (runwayDirection > 18) ? (runwayDirection - 18).toString().padStart(2, "0") : (18 + runwayDirection).toString().padStart(2, "0");
+                console.log("Runway Direction: " + runwayDirection);
+
+                let arrow = document.getElementsByClassName("arrow");
+                for (let i = 0; i < arrow.length; i++) {
+                    arrow[i].setAttribute("transform", `rotate(${180+windDirection}, 300, 300)`);
+                }
+            }
+    </script>
+
+</head>
+<body>
+
+
+
+    <div style="display:none;">
+
+        <img src="imgs/runway.png" alt="runway" class="image" id="runway">
+        <img src="imgs/arrow.png" alt="arrow" class="image" id="arrow">
+    </div>
+    <div class="runwaysvg">
+        <svg width="600" height="600" viewbox="600 600" transform="scale(0.5)" preserveAspectRatio >
+            <!-- <rect x="0" y="0" width="600" height="600" fill="skyblue"></rect> -->
+            <circle cx="300" cy="300" r="250" fill="#5555ff"></circle>
+            <rect x="250" y="25" width="100" height="550" fill="black" transform="rotate(0, 300, 300)" id="runwaybase"></rect>
+            <line x1="300" y1="25" x2="300" y2="575" stroke="white" stroke-dasharray="5" transform="rotate(0, 300, 300)" id="runwayline"></line>
+
+            <text x="275" y="550" font-size="60" fill="white" id="runwaynum1" transform="rotate(0, 300, 300)">36</text>
+            <text x="275" y="550" font-size="60" fill="white" id="runwaynum2" transform="rotate(180, 300, 300)">18</text>
+
+            // Arrow for wind direction
+            
+            <line x1="300" y1="47" x2="300" y2="550" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line>
+            <line x1="300" y1="50" x2="275" y2="75" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line> 
+            <line x1="300" y1="50" x2="325" y2="75" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line>   
+
+            <line x1="300" y1="100" x2="275" y2="125" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line> 
+            <line x1="300" y1="100" x2="325" y2="125" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line>   
+
+            <line x1="300" y1="150" x2="275" y2="175" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line> 
+            <line x1="300" y1="150" x2="325" y2="175" stroke="red" transform="rotate(180, 300, 300)" class="arrow" stroke-width="10"></line>  
+
+
+
+        </svg>
+    </div>
+    <form onsubmit="rotate()" id="thing">
+        <input type="number" min="0" max="36" id="runwaydirection" placeholder="Runway Direction"></input>
+        <input type="number" min="0" max="360" id="winddirection" placeholder="Wind Direction"></input>
+        <button onclick="rotate()">Rotate</button>
+    </form>
+</body>
+</html>
