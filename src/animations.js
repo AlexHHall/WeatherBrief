@@ -103,7 +103,267 @@ function atisToText(atis) {
   //    "REMARKS": "ON FIRST CTC WITH NZRO TWR NOTIFY RCPT OF D"
   //}
   // return a string
-  return `ATIS for ${atis["ICAO"]}.<br>Issued at ${atis["ISSUE_TIME"]}Z.<br>Approach is ${atis["APPROACH"]} for runway ${atis["RUNWAY"]}.<br>Runway conditions are ${atis["RWY_COND"]}.<br>Wind is ${atis["WIND"]}.<br>Visibility is ${atis["VIS"]}.<br>Clouds are ${atis["CLOUD"]}.<br>Temperature is ${atis["TEMPERATURE"]} degrees Celsius. Dewpoint is ${atis["DEWPOINT"]} degrees Celsius.<br>QNH is ${atis["QNH"]}.<br>Wind at 2000 feet is ${atis["2000 FT WIND"]}.<br>Remarks: ${atis["REMARKS"]}`;
+  return `ATIS for ${atis["ICAO"]}.<br>Issued at ${atis["ISSUE_TIME"]}Z.<br>Approach is ${atis["APCH"]} for runway ${atis["RWY"]}.<br>Runway conditions are ${atis["RWY_COND"]}.<br>Wind is ${atis["WIND"]}.<br>Visibility is ${atis["VIS"]}.<br>Clouds are ${atis["CLD"]}.<br>Temperature is ${atis["TEMPERATURE"]}°C. Dewpoint is ${atis["DEW_POINT"]}°C.<br>QNH is ${atis["QNH"]}.<br>Wind at 2000 feet is ${atis["2000_FT_WIND"]}.<br>Remarks: ${atis["REMARKS"]}`;
+}
+
+function generateWindRunwayWidget(runwayNum, windDir) {
+  runwayDirection = runwayNum * 10;
+  console.log(runwayDirection, windDir);
+
+  const windWidget = document.createElement("div");
+  windWidget.classList.add("windWidget");
+  windWidget.style.width = "600px";
+  windWidget.style.height = "600px";
+  
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "600");
+  svg.setAttribute("height", "600");
+  svg.setAttribute("viewbox", "600 600");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  svg.style.overflow = "visible";
+
+  svg.style.backgroundColor = "skyblue";
+  svg.style.borderRadius = "10px";
+  svg.style.overflow = "hidden";
+  svg.style.border = "2px solid black";
+
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  circle.setAttribute("cx", "300");
+  circle.setAttribute("cy", "300");
+  circle.setAttribute("r", "250");
+  circle.setAttribute("fill", "#5555ff");
+  svg.appendChild(circle);
+
+  const runwaybase = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  runwaybase.setAttribute("x", "250");
+  runwaybase.setAttribute("y", "25");
+  runwaybase.setAttribute("width", "100");
+  runwaybase.setAttribute("height", "550");
+  runwaybase.setAttribute("fill", "black");
+  runwaybase.setAttribute("transform", `rotate(${runwayDirection}, 300, 300)`);
+  runwaybase.setAttribute("id", "runwaybase");
+  svg.appendChild(runwaybase);
+
+  const runwayline = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  runwayline.setAttribute("x1", "300");
+  runwayline.setAttribute("y1", "25");
+  runwayline.setAttribute("x2", "300");
+  runwayline.setAttribute("y2", "575");
+  runwayline.setAttribute("stroke", "white");
+  runwayline.setAttribute("stroke-dasharray", "5");
+  runwayline.setAttribute("transform", `rotate(${runwayDirection}, 300, 300)`);
+  runwayline.setAttribute("id", "runwayline");
+  svg.appendChild(runwayline);
+
+  const runwaynum1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  runwaynum1.setAttribute("x", "300");
+  runwaynum1.setAttribute("y", "550");
+  runwaynum1.setAttribute("font-size", "60");
+  runwaynum1.setAttribute("fill", "white");
+  runwaynum1.setAttribute("id", "runwaynum1");
+  runwaynum1.setAttribute("transform", `rotate(${runwayDirection}, 300, 300)`);
+  runwaynum1.innerHTML = runwayNum.toString().padStart(2, "0");;
+  svg.appendChild(runwaynum1);
+
+  const runwaynum2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  runwaynum2.setAttribute("x", "300");
+  runwaynum2.setAttribute("y", "550");
+  runwaynum2.setAttribute("font-size", "60");
+  runwaynum2.setAttribute("fill", "white");
+  runwaynum2.setAttribute("id", "runwaynum2");
+  runwaynum2.setAttribute("transform", `rotate(${180+runwayDirection}, 300, 300)`);
+  runwaynum2.innerHTML = (runwayNum > 18) ? (runwayNum - 18).toString().padStart(2, "0") : (18 + runwayNum).toString().padStart(2, "0");;
+  svg.appendChild(runwaynum2);
+
+  const arrow1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  arrow1.setAttribute("x1", "300");
+  arrow1.setAttribute("y1", "47");
+  arrow1.setAttribute("x2", "300");
+  arrow1.setAttribute("y2", "550");
+  arrow1.setAttribute("stroke", "red");
+  arrow1.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow1.setAttribute("class", "arrow");
+  arrow1.setAttribute("stroke-width", "10");
+  svg.appendChild(arrow1);
+
+  const arrow2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  arrow2.setAttribute("x1", "300");
+  arrow2.setAttribute("y1", "50");
+  arrow2.setAttribute("x2", "275");
+  arrow2.setAttribute("y2", "75");
+  arrow2.setAttribute("stroke", "red");
+  arrow2.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow2.setAttribute("class", "arrow");
+  arrow2.setAttribute("stroke-width", "10");
+  svg.appendChild(arrow2);
+
+  const arrow3 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  arrow3.setAttribute("x1", "300");
+  arrow3.setAttribute("y1", "50");
+  arrow3.setAttribute("x2", "325");
+  arrow3.setAttribute("y2", "75");
+  arrow3.setAttribute("stroke", "red");
+  arrow3.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow3.setAttribute("class", "arrow");
+  arrow3.setAttribute("stroke-width", "10");
+  svg.appendChild(arrow3);
+
+  const arrow4 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  arrow4.setAttribute("x1", "300");
+  arrow4.setAttribute("y1", "100");
+  arrow4.setAttribute("x2", "275");
+  arrow4.setAttribute("y2", "125");
+  arrow4.setAttribute("stroke", "red");
+  arrow4.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow4.setAttribute("class", "arrow");
+  arrow4.setAttribute("stroke-width", "10");
+  svg.appendChild(arrow4);
+
+  const arrow5 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  arrow5.setAttribute("x1", "300");
+  arrow5.setAttribute("y1", "100");
+  arrow5.setAttribute("x2", "325");
+  arrow5.setAttribute("y2", "125");
+  arrow5.setAttribute("stroke", "red");
+  arrow5.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow5.setAttribute("class", "arrow");
+  arrow5.setAttribute("stroke-width", "10");
+  svg.appendChild(arrow5);
+
+  // add the svg to the windWidget
+  windWidget.appendChild(svg);
+
+  return windWidget;
+}
+
+function generateCloudWidget(cloudInput) {
+  const cloudWidget = document.createElement("div");
+  cloudWidget.classList.add("cloudWidget");
+  cloudWidget.style.width = "600px";
+  cloudWidget.style.height = "600px";
+
+  let cloudArray = cloudInput.split(" ");
+  let cloudsvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  cloudsvg.setAttribute("width", "600");
+  cloudsvg.setAttribute("height", "600");
+  cloudsvg.setAttribute("viewbox", "0 0 600 600");
+  cloudsvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  cloudsvg.style.overflow = "visible";
+  cloudsvg.style.borderRadius = "10px";
+  cloudsvg.style.overflow = "hidden";
+  cloudsvg.style.border = "2px solid black";
+  cloudWidget.appendChild(cloudsvg);
+
+  let clouds = [];
+  for (let i = 0; i < cloudArray.length; i += 3) {
+      clouds.push({
+          type: cloudArray[i],
+          height: cloudArray[i + 1],
+          unit: cloudArray[i + 2]
+      });
+  }
+  // if NSC is in the input, don't generate any clouds
+  if (cloudArray.includes("NSC")) {
+      clouds.push({
+          type: "NSC",
+          height: "No Significant Clouds",
+          unit: ""
+      });
+      return;
+  }
+  cloudsvg.innerHTML = "";
+  clouds.sort((a, b) => {
+      return a.height - b.height;
+  });
+  let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  rect.setAttribute("x", 0);
+  rect.setAttribute("y", 0);
+  rect.setAttribute("width", 600);
+  rect.setAttribute("height", 600);
+  rect.setAttribute("fill", "skyblue");
+  cloudsvg.appendChild(rect);            
+
+  for (let i = 0; i < clouds.length; i++) {
+      let cloud = clouds[i];
+      let y = 600 - (i + 1) * 100;
+      let cloudCount = 0;
+      if (cloud.type == "FEW") {
+          cloudCount = 2;
+      } else if (cloud.type == "SCT") {
+          cloudCount = 4;
+      } else if (cloud.type == "BKN") {
+          cloudCount = 7;
+      } else if (cloud.type == "OVC") {
+          cloudCount = 8;
+      }
+      for (let j = 0; j < cloudCount; j++) {
+          let x = 150 + (((600-150)/cloudCount)*j);
+          let cloudGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          cloudGroup.setAttribute("transform", `translate(${x}, ${y})`);
+          cloudsvg.appendChild(cloudGroup);
+          for (let k = 0; k < 20; k++) {
+              let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+              let cx = Math.random() * 40 - 10;
+              let cy = Math.random() * 20 - 10;
+              let r = Math.random() * 20 + 5;
+              let opacity = Math.random() * 0.5 + 0.5;
+              circle.setAttribute("cx", cx);
+              circle.setAttribute("cy", cy);
+              circle.setAttribute("r", r);
+              circle.setAttribute("fill", "white");
+              circle.setAttribute("fill-opacity", opacity);
+              cloudGroup.appendChild(circle);
+          }
+      }
+      for (let i = 0; i < clouds.length; i++) {
+      let cloud = clouds[i];
+      let y = 600 - (i + 1) * 100;
+      let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", 0);
+      line.setAttribute("y1", y);
+      line.setAttribute("x2", 600);
+      line.setAttribute("y2", y);
+      line.setAttribute("stroke", "white");
+      line.setAttribute("stroke-width", 2);
+      line.setAttribute("stroke-dasharray", "10, 10");
+      cloudsvg.appendChild(line);
+
+      let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", 10);
+      text.setAttribute("y", y - 10);
+      text.setAttribute("fill", "black");
+      text.textContent = cloud.type + " " + cloud.height + " " + cloud.unit;
+      cloudsvg.appendChild(text);
+  }
+  }
+  return cloudWidget;
+}
+
+function generateAutoAirportDisplay(atis, metar, taf) {
+    const container = document.createElement("div");
+    container.classList.add("autoairport-fullscreen-container");
+
+    const wind_runway_container = document.createElement("div");
+    wind_runway_container.classList.add("wind-runway-container");
+
+    const cloud_container = document.createElement("div");
+    cloud_container.classList.add("cloud-container");
+
+
+
+    const wind_runway_widget = generateWindRunwayWidget(
+        parseInt(atis["RWY"]),
+        parseInt(atis["WIND"].split("/")[0])
+    );
+
+    const cloud_widget = generateCloudWidget("FEW 2000 FT OVC 2500 FT");
+    wind_runway_container.appendChild(wind_runway_widget);
+    cloud_container.appendChild(cloud_widget);
+
+    container.appendChild(wind_runway_container);
+    container.appendChild(cloud_container);
+
+    return container;
 }
 
 window.onload = function () {
@@ -220,7 +480,7 @@ window.onload = function () {
       ? "true"
       : "false";
     fetch(
-      "http://localhost:3001/airport/met/" +
+      "http://localhost:3001/api/airport/met/" +
         airportCode +
         "?" +
         new URLSearchParams({
@@ -285,11 +545,15 @@ window.onload = function () {
           const atis = document.createElement("div");
           atis.innerHTML = atisToText(data["ATIS"]);
           atis.classList.add("autoairportinfobox");
+          atis.onclick = function () {
+            airport.appendChild(generateAutoAirportDisplay(data["ATIS"], data["METAR"], data["TAF"]));
+          };
           itemscontainer.appendChild(atis);
         }
 
         airport.appendChild(itemscontainer);
         autodisplay.appendChild(airport);
+
       });
   });
 };

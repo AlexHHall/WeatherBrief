@@ -373,6 +373,7 @@ body {
   border-radius: 1rem;
   width: auto;
   margin: 5px;
+  cursor: pointer;
 }
 
 .closebutton {
@@ -407,4 +408,41 @@ body {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+.autoairport-fullscreen-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  height: 604px;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  z-index: 1000;
+}
+
+
+.cloud-container {
+  background-color: red;
+  align-items: center;
+  display: flex;
+}
+
+.cloud-container svg {
+  transform: scale(0.5) translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.wind-runway-container {
+  background-color: orange;
+
+}
+
+.wind-runway-container svg {
+  transform: scale(0.5) translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 }
