@@ -103,7 +103,17 @@ function atisToText(atis) {
   //    "REMARKS": "ON FIRST CTC WITH NZRO TWR NOTIFY RCPT OF D"
   //}
   // return a string
-  return `ATIS for ${atis["ICAO"]}.<br>Issued at ${atis["ISSUE_TIME"]}Z.<br>Approach is ${atis["APCH"]} for runway ${atis["RWY"]}.<br>Runway conditions are ${atis["RWY_COND"]}.<br>Wind is ${atis["WIND"]}.<br>Visibility is ${atis["VIS"]}.<br>Clouds are ${atis["CLD"]}.<br>Temperature is ${atis["TEMPERATURE"]}°C. Dewpoint is ${atis["DEW_POINT"]}°C.<br>QNH is ${atis["QNH"]}.<br>Wind at 2000 feet is ${atis["2000_FT_WIND"]}.<br>Remarks: ${atis["REMARKS"]}`;
+  return `ATIS for ${atis["ICAO"]}.
+  <br>Issued at ${atis["ISSUE_TIME"]}Z.
+  <br>Approach is ${atis["APCH"]} for runway ${atis["RWY"]}.
+  <br>Runway conditions are ${atis["RWY_COND"]}.
+  <br>Wind is ${atis["WIND"]}.
+  <br>Visibility is ${atis["VIS"]}.
+  <br>Clouds are ${atis["CLD"]}.
+  <br>Temperature is ${atis["TEMPERATURE"]}°C. Dewpoint is ${atis["DEW_POINT"]}°C.
+  <br>QNH is ${atis["QNH"]}.
+  <br>Wind at 2000 feet is ${atis["2000_FT_WIND"]}.
+  <br>Remarks: ${atis["REMARKS"]}`;
 }
 
 function generateWindRunwayWidget(runwayNum, windDir) {
@@ -181,7 +191,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   arrow1.setAttribute("x2", "300");
   arrow1.setAttribute("y2", "550");
   arrow1.setAttribute("stroke", "red");
-  arrow1.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow1.setAttribute("transform", `rotate(${windDir}, 300, 300)`);
   arrow1.setAttribute("class", "arrow");
   arrow1.setAttribute("stroke-width", "10");
   svg.appendChild(arrow1);
@@ -192,7 +202,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   arrow2.setAttribute("x2", "275");
   arrow2.setAttribute("y2", "75");
   arrow2.setAttribute("stroke", "red");
-  arrow2.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow2.setAttribute("transform", `rotate(${windDir}, 300, 300)`);
   arrow2.setAttribute("class", "arrow");
   arrow2.setAttribute("stroke-width", "10");
   svg.appendChild(arrow2);
@@ -203,7 +213,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   arrow3.setAttribute("x2", "325");
   arrow3.setAttribute("y2", "75");
   arrow3.setAttribute("stroke", "red");
-  arrow3.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow3.setAttribute("transform", `rotate(${windDir}, 300, 300)`);
   arrow3.setAttribute("class", "arrow");
   arrow3.setAttribute("stroke-width", "10");
   svg.appendChild(arrow3);
@@ -214,7 +224,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   arrow4.setAttribute("x2", "275");
   arrow4.setAttribute("y2", "125");
   arrow4.setAttribute("stroke", "red");
-  arrow4.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow4.setAttribute("transform", `rotate(${windDir}, 300, 300)`);
   arrow4.setAttribute("class", "arrow");
   arrow4.setAttribute("stroke-width", "10");
   svg.appendChild(arrow4);
@@ -225,7 +235,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   arrow5.setAttribute("x2", "325");
   arrow5.setAttribute("y2", "125");
   arrow5.setAttribute("stroke", "red");
-  arrow5.setAttribute("transform", "rotate(180, 300, 300)");
+  arrow5.setAttribute("transform", `rotate(${windDir}, 300, 300)`);
   arrow5.setAttribute("class", "arrow");
   arrow5.setAttribute("stroke-width", "10");
   svg.appendChild(arrow5);
@@ -339,9 +349,33 @@ function generateCloudWidget(cloudInput) {
   return cloudWidget;
 }
 
-function generateAutoAirportDisplay(atis, metar, taf) {
-    const container = document.createElement("div");
-    container.classList.add("autoairport-fullscreen-container");
+function generateAutoAirportATISDisplay(atis, metar, taf) {
+  const container = document.createElement("div");
+  container.classList.add("autoairport-fullscreen-container");
+
+  const header = document.createElement("div");
+  header.classList.add("autoairport-fullscreen-header");
+
+  const title = document.createElement("h2");
+  title.innerHTML = atis["ICAO"];
+  header.appendChild(title);
+
+  const subtitle = document.createElement("h2");
+  subtitle.innerHTML = "ATIS Information";
+  header.appendChild(subtitle);
+
+  const closebutton = document.createElement("span");
+  closebutton.innerHTML = "close";
+  closebutton.classList.add("closebutton-white");
+  closebutton.classList.add("material-symbols-outlined");
+  closebutton.addEventListener("click", function () {
+    container.remove();
+  });
+  header.appendChild(closebutton);
+  container.appendChild(header);
+    const grid_container = document.createElement("div");
+
+    grid_container.classList.add("autoairport-fullscreen-grid-container");
 
     const wind_runway_container = document.createElement("div");
     wind_runway_container.classList.add("wind-runway-container");
@@ -360,10 +394,220 @@ function generateAutoAirportDisplay(atis, metar, taf) {
     wind_runway_container.appendChild(wind_runway_widget);
     cloud_container.appendChild(cloud_widget);
 
-    container.appendChild(wind_runway_container);
-    container.appendChild(cloud_container);
+    grid_container.appendChild(wind_runway_container);
+    grid_container.appendChild(cloud_container);
+    container.appendChild(grid_container);
 
     return container;
+}
+
+function generateAutoAirportTAFDisplay(taf) {
+  // decode the TAF
+  // TAF is a string
+
+
+  const container = document.createElement("div");
+  container.classList.add("autoairport-fullscreen-container");
+
+  const header = document.createElement("div");
+  header.classList.add("autoairport-fullscreen-header");
+
+  const title = document.createElement("h2");
+  title.innerHTML = taf.split(" ")[1];
+  header.appendChild(title);
+
+  const subtitle = document.createElement("h2");
+  subtitle.innerHTML = "TAF Information";
+  header.appendChild(subtitle);
+
+  const closebutton = document.createElement("span");
+  closebutton.innerHTML = "close";
+  closebutton.classList.add("closebutton-white");
+  closebutton.classList.add("material-symbols-outlined");
+  closebutton.addEventListener("click", function () {
+    container.remove();
+  });
+  header.appendChild(closebutton);
+  container.appendChild(header);
+
+  const tafdiv = document.createElement("div");
+  tafdiv.innerText = taf;
+  container.appendChild(tafdiv);
+
+  // for each line in the TAF, create a div and add it to the container
+  
+  for (let i = 0; i < taf.split("\n").length; i++) {
+    const tafline = document.createElement("div");
+    tafline.innerHTML = decodeTafLine(taf.split("\n")[i]);
+    container.appendChild(tafline);
+  }
+
+  return container;
+}
+
+function isANumber(str) {
+  return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
+const phenomona_list = {"SH": "Showers", "TS": "Thunderstorms", "DZ": "Drizzle", "RA": "Rain", "GS": "", "GR": "", "SN": "", "SG": "", "BR": "", "FG": "", "HZ": "", "FU": "", "VA": "", "DU": "", "SA": "", "SQ": "", "PO": "", "FC": "", "SS": "", "DS": ""}
+
+function decodeTafLine(tafline) {
+  if (tafline.includes("TAF")) {
+    let icao_code = "None";
+    let issue_time = "None";
+    let validity_period = "None";
+    let start = "";
+    if (tafline.includes("AMD")) {
+      icao_code = tafline.split(" ")[2];
+      issue_time = tafline.split(" ")[3];
+      validity_period = tafline.split(" ")[4];
+      start = "Ammended "
+    } else if (tafline.includes("COR")) {
+      icao_code = tafline.split(" ")[2];
+      issue_time = tafline.split(" ")[3];
+      validity_period = tafline.split(" ")[4];
+      start = "Corrected "
+    } else {
+      icao_code = tafline.split(" ")[1];
+      issue_time = tafline.split(" ")[2];
+      validity_period = tafline.split(" ")[3];
+      start = ""
+    }
+    return start + "Terminal Aerodrome Forecast for " + icao_code + ". Issued at " + issue_time + ". Validity Period: " + validity_period +".";
+  } else if (tafline.startsWith("TEMPO")) {
+    weather_conditions = tafline.split(" ").slice(2).join(" ").split(" ");
+    wx_str = "";
+    var wind;
+    var vis;
+    for (let i = 0; i < weather_conditions.length; i++) {
+      if (weather_conditions[i].includes("KT") && isANumber(weather_conditions[i].substring(0,5))) {
+        wind = weather_conditions[i];
+        wind = wind.substring(0, wind.length - 2);
+        // wind direction is the first 3 characters
+        // wind speed is the last 2 characters
+        wind_direction = wind.substring(0, 3) + "degrees true";
+        wind_speed = wind.substring(3, 5) + " knots";
+        wx_str += "Wind is " + wind_direction + " at " + wind_speed + ". ";
+      } else if (weather_conditions[i].includes("KM") || isANumber(weather_conditions[i])) {
+        vis = weather_conditions[i];
+        // check if visibility is in meters or kilometers
+        if (vis.includes("KM")) {
+          vis = vis.substring(0, vis.length - 2);
+          wx_str += "Visibility is " + vis + " kilometers. ";
+        } else {
+          wx_str += "Visibility is " + vis + " meters. ";
+        }
+      } 
+      
+      if (!isANumber(weather_conditions[i])) {
+        if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-" || weather_conditions[i].length % 2 == 0) {
+          if (weather_conditions[i][0] == "+") {
+            wx_str += "Heavy ";
+          } else if (weather_conditions[i][0] == "-") {
+            wx_str += "Light ";
+          } else {
+            wx_str += "Moderate ";
+          }
+          if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-") {
+            weather_conditions[i] = weather_conditions[i].substring(1);
+          }
+          for (let j = 0; j < weather_conditions[i].length; j += 2) {
+            console.log(weather_conditions[i].substring(j, j + 2));
+            wx_str += phenomona_list[weather_conditions[i].substring(j, j + 2)] + " ";
+          }
+        } else if (tafline.startsWith("TEMPO")) {
+    weather_conditions = tafline.split(" ").slice(2).join(" ").split(" ");
+    wx_str = "";
+    var wind;
+    var vis;
+    for (let i = 0; i < weather_conditions.length; i++) {
+      if (weather_conditions[i].includes("KT") && isANumber(weather_conditions[i].substring(0,5))) {
+        wind = weather_conditions[i];
+        wind = wind.substring(0, wind.length - 2);
+        // wind direction is the first 3 characters
+        // wind speed is the last 2 characters
+        wind_direction = wind.substring(0, 3) + "degrees true";
+        wind_speed = wind.substring(3, 5) + " knots";
+        wx_str += "Wind is " + wind_direction + " at " + wind_speed + ". ";
+      } else if (weather_conditions[i].includes("KM") || isANumber(weather_conditions[i])) {
+        vis = weather_conditions[i];
+        // check if visibility is in meters or kilometers
+        if (vis.includes("KM")) {
+          vis = vis.substring(0, vis.length - 2);
+          wx_str += "Visibility is " + vis + " kilometers. ";
+        } else {
+          wx_str += "Visibility is " + vis + " meters. ";
+        }
+      } 
+      
+      if (!isANumber(weather_conditions[i])) {
+        if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-" || weather_conditions[i].length % 2 == 0) {
+          if (weather_conditions[i][0] == "+") {
+            wx_str += "Heavy ";
+          } else if (weather_conditions[i][0] == "-") {
+            wx_str += "Light ";
+          } else {
+            wx_str += "Moderate ";
+          }
+          if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-") {
+            weather_conditions[i] = weather_conditions[i].substring(1);
+          }
+          for (let j = 0; j < weather_conditions[i].length; j += 2) {
+            console.log(weather_conditions[i].substring(j, j + 2));
+            wx_str += phenomona_list[weather_conditions[i].substring(j, j + 2)] + " ";
+          }
+        } 
+      }
+    }
+    return "Temporarily between " + tafline.split(" ")[1].split("/")[0] + " and " + tafline.split(" ")[1].split("/")[1] + ": " + wx_str;
+  } else if (tafline.startsWith("BECMG")) {
+    weather_conditions = tafline.split(" ").slice(2).join(" ").split(" ");
+    wx_str = "";
+    var wind;
+    var vis;
+    for (let i = 0; i < weather_conditions.length; i++) {
+      if (weather_conditions[i].includes("KT") && isANumber(weather_conditions[i].substring(0,5))) {
+        wind = weather_conditions[i];
+        wind = wind.substring(0, wind.length - 2);
+        // wind direction is the first 3 characters
+        // wind speed is the last 2 characters
+        wind_direction = wind.substring(0, 3) + "degrees true";
+        wind_speed = wind.substring(3, 5) + " knots";
+        wx_str += "Wind is " + wind_direction + " at " + wind_speed + ". ";
+      } else if (weather_conditions[i].includes("KM") || isANumber(weather_conditions[i])) {
+        vis = weather_conditions[i];
+        // check if visibility is in meters or kilometers
+        if (vis.includes("KM")) {
+          vis = vis.substring(0, vis.length - 2);
+          wx_str += "Visibility is " + vis + " kilometers. ";
+        } else {
+          wx_str += "Visibility is " + vis + " meters. ";
+        }
+      } 
+      
+      if (!isANumber(weather_conditions[i])) {
+        if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-" || weather_conditions[i].length % 2 == 0) {
+          if (weather_conditions[i][0] == "+") {
+            wx_str += "Heavy ";
+          } else if (weather_conditions[i][0] == "-") {
+            wx_str += "Light ";
+          } else {
+            wx_str += "Moderate ";
+          }
+          if (weather_conditions[i][0] == "+" || weather_conditions[i][0] == "-") {
+            weather_conditions[i] = weather_conditions[i].substring(1);
+          }
+          for (let j = 0; j < weather_conditions[i].length; j += 2) {
+            console.log(weather_conditions[i].substring(j, j + 2));
+            wx_str += phenomona_list[weather_conditions[i].substring(j, j + 2)] + " ";
+          }
+        } 
+      }
+    }
+    return "Becoming between " + tafline.split(" ")[1].split("/")[0] + " and " + tafline.split(" ")[1].split("/")[1] + ": " + wx_str;
+  } else {
+    return tafline + ": Unable to decode";
+  }
 }
 
 window.onload = function () {
@@ -467,7 +711,7 @@ window.onload = function () {
   airportbutton = document.getElementById("airportbutton");
   airportbutton.addEventListener("click", () => {
     const airportInput = document.getElementById("airportinput");
-    const airportCode = airportInput.value;
+    const airportCode = airportInput.value.toUpperCase();
     // make a fetch request with no cors
     // include metar, taf, atis if selected
     _includeatis = autoatisbutton.classList.contains("selected")
@@ -539,6 +783,9 @@ window.onload = function () {
           const taf = document.createElement("div");
           taf.innerHTML = data["TAF"].replace(/\n/g, "<br />");
           taf.classList.add("autoairportinfobox");
+          taf.onclick = function () {
+            airport.appendChild(generateAutoAirportTAFDisplay(data["TAF"]));
+          };
           itemscontainer.appendChild(taf);
         }
         if (_includeatis === "true") {
@@ -546,7 +793,7 @@ window.onload = function () {
           atis.innerHTML = atisToText(data["ATIS"]);
           atis.classList.add("autoairportinfobox");
           atis.onclick = function () {
-            airport.appendChild(generateAutoAirportDisplay(data["ATIS"], data["METAR"], data["TAF"]));
+            airport.appendChild(generateAutoAirportATISDisplay(data["ATIS"], data["METAR"], data["TAF"]));
           };
           itemscontainer.appendChild(atis);
         }
@@ -556,4 +803,4 @@ window.onload = function () {
 
       });
   });
-};
+}}}};
