@@ -1,75 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
 
-    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
     <title>meteorology or smth</title>
     <script src="/animations.js"></script>
-    <link rel='icon' href='favicon.ico' class='js-favicon'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-</head>
-<body>
+    <link rel="icon" href="favicon.ico" class="js-favicon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
+  <body>
     <div class="container">
-        <div id="background">
-            <div class="sun"></div>
-            <div id="clouds"></div>
-            <div id="rain"></div>
-            <div id="animationswitch" class="optionsswitch on"><div id="animationswitchinside" class="optionsswitchinside on"></div></div>
-
-            <div id="lightbackground" class="lightbackground">
-
-                <h1 class="title">Weather Brief</h1>
-                <div class="airporttypeselector">
-                    <button id="auto" class="typeselectorbutton selected">Auto</button>
-                    <button id="manual" class="typeselectorbutton">Manual</button>
-                </div>
-                <div id="manualcontainer"  style="display: none;">
-                    <div class="typeselector">
-                        <button id="manualmetarbutton" class="typeselectorbutton manualtypeselectorbutton selected">METAR</button>
-                        <button id="manualtafbutton" class="typeselectorbutton manualtypeselectorbutton selected" >TAF</button>
-                        <button id="manualatisbutton" class="typeselectorbutton manualtypeselectorbutton selected">ATIS</button>
-                    </div>
-                    <div class="weather-container">
-                        <div id="manualmetar" class="weather-widget-container">
-                            <h1 class="title">Metar Decoder</h1>
-                            <input type="text" placeholder="Enter Metar" class="wxbriefinput" id="metarinput"></input>
-                            <button id="metarbutton" class="wxbriefbutton">Go</button>
-                        </div>
-                        <div id="manualtaf" class="weather-widget-container">
-                            <h1 class="title">TAF Decoder</h1>
-                            <span contenteditable="true" role="textbox">
-                                <input type="text" placeholder="Enter TAF" class="wxbriefinput" id="tafinput" style="max-height: min-content;"></input>
-
-                            </span>
-                            <button id="metarbutton" class="wxbriefbutton">Go</button>
-                        </div>
-                        <div id="manualatis" class="weather-widget-container">
-                            <h1 class="title">ATIS Decoder</h1>
-                        </div>
-                    </div>
-
-                </div>
-                <div id="autocontainer">
-                    <form id="airportselection" class="airportselection">
-                        <input type="text" id="airportinput" class="airportinput" placeholder="Enter ICAO code">
-                        <div id="autotypes-selector" class="autotypeselectorcontainer">
-                            <button type="button" id="autoatisbutton" class="autotypeselectorbutton selected">ATIS</button>
-                            <button type="button" id="autometarbutton" class="autotypeselectorbutton selected">METAR</button>
-                            <button type="button"id="autotafbutton" class="autotypeselectorbutton selected">TAF</button>
-                        </div>
-                        <button type="submit" id="airportbutton" class="airportbutton airportinput">Add Airport</button>
-                    </form>
-                    <div id="autometdisplay">
-
-                    </div>
-                </div>
-
-            </div>
-
+      <div id="background">
+        <div class="sun"></div>
+        <div id="clouds"></div>
+        <div id="rain"></div>
+        <div id="animationswitch" class="optionsswitch on">
+          <div id="animationswitchinside" class="optionsswitchinside on"></div>
         </div>
+
+        <div id="lightbackground" class="lightbackground">
+          <h1 class="title">Weather Brief</h1>
+          <div class="airporttypeselector">
+            <button id="auto" class="typeselectorbutton selected">Auto</button>
+            <button id="manual" class="typeselectorbutton">Manual</button>
+          </div>
+          <div id="manualcontainer" style="display: none">
+            <div class="typeselector">
+              <button
+                id="manualmetarbutton"
+                class="typeselectorbutton manualtypeselectorbutton selected"
+              >
+                METAR
+              </button>
+              <button
+                id="manualtafbutton"
+                class="typeselectorbutton manualtypeselectorbutton selected"
+              >
+                TAF
+              </button>
+              <button
+                id="manualatisbutton"
+                class="typeselectorbutton manualtypeselectorbutton selected"
+              >
+                ATIS
+              </button>
+            </div>
+            <div class="weather-container">
+              <div id="manualmetar" class="weather-widget-container">
+                <h1 class="title">Metar Decoder</h1>
+                <input
+                  type="text"
+                  placeholder="Enter Metar"
+                  class="wxbriefinput"
+                  id="metarinput"
+                />
+                <button id="metarbutton" class="wxbriefbutton">Go</button>
+              </div>
+              <div id="manualtaf" class="weather-widget-container">
+                <h1 class="title">TAF Decoder</h1>
+                <span contenteditable="true" role="textbox">
+                  <input
+                    type="text"
+                    placeholder="Enter TAF"
+                    class="wxbriefinput"
+                    id="tafinput"
+                    style="max-height: min-content"
+                  />
+                </span>
+                <button id="metarbutton" class="wxbriefbutton">Go</button>
+              </div>
+              <div id="manualatis" class="weather-widget-container">
+                <h1 class="title">ATIS Decoder</h1>
+              </div>
+            </div>
+          </div>
+          <div id="autocontainer">
+            <form id="airportselection" class="airportselection">
+              <input
+                type="text"
+                id="airportinput"
+                class="airportinput"
+                placeholder="Enter ICAO code"
+              />
+              <div id="autotypes-selector" class="autotypeselectorcontainer">
+                <button
+                  type="button"
+                  id="autoatisbutton"
+                  class="autotypeselectorbutton selected"
+                >
+                  ATIS
+                </button>
+                <button
+                  type="button"
+                  id="autometarbutton"
+                  class="autotypeselectorbutton selected"
+                >
+                  METAR
+                </button>
+                <button
+                  type="button"
+                  id="autotafbutton"
+                  class="autotypeselectorbutton selected"
+                >
+                  TAF
+                </button>
+              </div>
+              <button
+                type="submit"
+                id="airportbutton"
+                class="airportbutton airportinput"
+              >
+                Add Airport
+              </button>
+            </form>
+            <div id="autometdisplay"></div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
