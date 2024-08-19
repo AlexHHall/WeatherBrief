@@ -453,3 +453,21 @@ body {
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
+
+.manualinput {
+  border-radius: 1rem;
+  display: inline-block;
+  border: 1px solid transparent;
+  margin: 5px;
+  padding: 0.8rem;
+  width: 80%;
+  height: 50rem;
+}
+
+.manualbutton {
+  cursor: pointer;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  padding: 0.8rem;
+  width: 10%;
+}

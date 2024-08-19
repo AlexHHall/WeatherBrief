@@ -19,11 +19,9 @@ function generateClouds() {
     )}s linear infinite`;
     brightness = randomIntFromInterval(245, 255);
     difference = randomIntFromInterval(0, 2);
-    cloud.style.backgroundColor = `rgb(${
-      brightness + (Math.random() - 0.5) * difference
-    }, ${brightness + (Math.random() - 0.5) * difference}, ${
-      brightness + (Math.random() - 0.5) * difference
-    })`;
+    cloud.style.backgroundColor = `rgb(${brightness + (Math.random() - 0.5) * difference
+      }, ${brightness + (Math.random() - 0.5) * difference}, ${brightness + (Math.random() - 0.5) * difference
+      })`;
     cloud.style.borderRadius = "50%";
     cloud.style.position = "absolute";
     container.appendChild(cloud);
@@ -861,15 +859,30 @@ function decodeMetar(metar) {
   var icao_code = metar_array.shift();
   var issue_time = metar_array.shift();
   var wind_raw = metar_array.shift();
-  var visibility_raw = metar_array.shift();
-  var weather_raw = metar_array.shift();
-  var qnh = metar_array.pop();
-  var dewpointtemperature_raw = metar_array.pop();
-  decoded_metar_str += `for ${icao_code} issued at ${issue_time}. `;
-  // Decode the Wind
+  var wind_str = "";
+  var wind_variable = false;
   var wind_direction = wind_raw.substring(0, 3);
   var wind_speed = wind_raw.substring(3, 5);
-  decoded_metar_str += `Wind is from ${wind_direction} degrees true at ${wind_speed} knots. `;
+  if (metar_array[0].includes("V")) {
+    wind_variable = true;
+    wind_str += `Wind is variable between ${metar_array[0].substring(0, 3)} and ${metar_array[0].substring(4, 7)} from ${wind_direction} degrees true at ${wind_speed} knots. `;
+    metar_array.shift();
+  }
+
+  var visibility_raw = metar_array.shift();
+  if (metar_array[0].length == 4 || metar_array[0].length == 5) {
+    var weather_raw = metar_array.shift();
+  }
+  var qnh = metar_array.pop();
+
+  var dewpointtemperature_raw = metar_array.pop();
+  decoded_metar_str += `for ${icao_code} issued at ${issue_time}. `;
+
+  if (wind_variable) {
+    decoded_metar_str += wind_str;
+  } else {
+    decoded_metar_str += `Wind is from ${wind_direction} degrees true at ${wind_speed} knots. `;
+  }
 
   // Decode the Visibility
   var visibility = visibility_raw;
@@ -883,31 +896,80 @@ function decodeMetar(metar) {
     decoded_metar_str += `Visibility is ${visibility} meters. `;
   }
 
+
   // Decode the Weather
-  var weather = weather_raw;
-  if (weather.startsWith("+") || weather.startsWith("-")) {
-    if (weather.startsWith("+")) {
-      decoded_metar_str += "Heavy ";
-    } else {
-      decoded_metar_str += "Light ";
+  if (weather_raw == undefined) {
+    decoded_metar_str += "No significant weather. ";
+  } else {
+    var weather = weather_raw;
+    if (weather.startsWith("+") || weather.startsWith("-")) {
+      if (weather.startsWith("+")) {
+        decoded_metar_str += "Heavy ";
+      } else {
+        decoded_metar_str += "Light ";
+      }
+      weather = weather.substring(1);
     }
-    weather = weather.substring(1);
+    for (let i = 0; i < weather.length; i += 2) {
+      decoded_metar_str += phenomona_list[weather.substring(i, i + 2)] + " ";
+    }
+    decoded_metar_str += ". ";
   }
-  for (let i = 0; i < weather.length; i += 2) {
-    decoded_metar_str += phenomona_list[weather.substring(i, i + 2)] + " ";
-  }
-  decoded_metar_str += ". ";
 
   // Decode the Dewpoint Temperature
   var temperature = dewpointtemperature_raw.substring(0, 2);
   var dewpoint = dewpointtemperature_raw.substring(3, 5);
-  decoded_metar_str += `Temperature is ${temperature} degrees Celsius. Dewpoint is ${dewpoint} degrees Celsius. `; 
 
 
   // Decode the QNH
   if (qnh.endsWith("=")) {
     qnh = qnh.substring(0, qnh.length - 1);
   }
+
+  // All that's left in the array is clouds, so decode that
+  if (metar_array.length == 0) {
+    decoded_metar_str += "No significant clouds. ";
+  } else {
+    for (let i = 0; i < metar_array.length; i++) {
+      // if the cloud string ends with 3 slashes, it doesn't know if it's a towering cumulus or cumulonimbus cloud
+      var note = ""
+      if (metar_array[i].endsWith("//////")) {
+        // Faulty Sensor, add a note
+        note += "Cloud Sensor Faulty";
+      } else if (metar_array[i].endsWith("////")) {
+        // Visbility Sensor is faulty
+        note += "Visibility Sensor Faulty";
+      } else if (metar_array[i].endsWith("///")) {
+        // Cloud is detected (unable to determine TCU/CB)
+        note += "Unable to determine TCU/TB";
+      } else if (metar_array[i].endsWith("//")) {
+        // Weather not detected due sensor temporarily inoperative
+        note += "Weather Sensor Faulty";
+      }
+      // get rid of all slashes in the cloud string
+      metar_array[i] = metar_array[i].replace(/\//g, "");
+
+      console.log(metar_array[i]);
+      if (metar_array[i].length == 6) {
+        var cloud_type = metar_array[i].substring(0, 3);
+        var cloud_height = metar_array[i].substring(3, 6);
+        cloud_height = Number(cloud_height) * 100;
+        if (cloud_type == "OVC") {
+          cloud_type = "Overcast";
+        } else if (cloud_type == "BKN") {
+          cloud_type = "Broken";
+        } else if (cloud_type == "SCT") {
+          cloud_type = "Scattered";
+        } else if (cloud_type == "FEW") {
+          cloud_type = "Few";
+        }
+        decoded_metar_str += `Clouds are ${cloud_type} at ${cloud_height} feet and ${note}. `;
+      }
+    }
+  }
+
+  decoded_metar_str += `Temperature is ${temperature} degrees Celsius. Dewpoint is ${dewpoint} degrees Celsius. `;
+
   decoded_metar_str += `QNH is ${qnh}. `;
 
   console.log(metar_array);
@@ -970,27 +1032,6 @@ window.onload = function () {
       typeselect.classList.toggle("selected");
     });
   });
-  const manualmetarbutton = document.getElementById("manualmetarbutton");
-  manualmetarbutton.addEventListener("click", function () {
-    const manualmetar = document.getElementById("manualmetar");
-    manualmetar.style.display = manualmetarbutton.classList.contains("selected")
-      ? "block"
-      : "none";
-  });
-  const manualtafbutton = document.getElementById("manualtafbutton");
-  manualtafbutton.addEventListener("click", function () {
-    const manualtaf = document.getElementById("manualtaf");
-    manualtaf.style.display = manualtafbutton.classList.contains("selected")
-      ? "block"
-      : "none";
-  });
-  const manualatisbutton = document.getElementById("manualatisbutton");
-  manualatisbutton.addEventListener("click", function () {
-    const manualatis = document.getElementById("manualatis");
-    manualatis.style.display = manualatisbutton.classList.contains("selected")
-      ? "block"
-      : "none";
-  });
 
   const autoatisbutton = document.getElementById("autoatisbutton");
   autoatisbutton.addEventListener("click", function () {
@@ -1028,14 +1069,14 @@ window.onload = function () {
       ? "true"
       : "false";
     fetch(
-      "http://localhost:3001/api/airport/met/" +
-        airportCode +
-        "?" +
-        new URLSearchParams({
-          includemetar: _includemetar,
-          includetaf: _includetaf,
-          includeatis: _includeatis,
-        })
+      "http://localhost:25565/api/airport/met/" +
+      airportCode +
+      "?" +
+      new URLSearchParams({
+        includemetar: _includemetar,
+        includetaf: _includetaf,
+        includeatis: _includeatis,
+      })
     )
       .then((response) => response.json())
       .then((data) => {

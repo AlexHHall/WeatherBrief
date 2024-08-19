@@ -34,53 +34,11 @@
             <button id="manual" class="typeselectorbutton">Manual</button>
           </div>
           <div id="manualcontainer" style="display: none">
-            <div class="typeselector">
-              <button
-                id="manualmetarbutton"
-                class="typeselectorbutton manualtypeselectorbutton selected"
-              >
-                METAR
-              </button>
-              <button
-                id="manualtafbutton"
-                class="typeselectorbutton manualtypeselectorbutton selected"
-              >
-                TAF
-              </button>
-              <button
-                id="manualatisbutton"
-                class="typeselectorbutton manualtypeselectorbutton selected"
-              >
-                ATIS
-              </button>
-            </div>
             <div class="weather-container">
-              <div id="manualmetar" class="weather-widget-container">
-                <h1 class="title">Metar Decoder</h1>
-                <input
-                  type="text"
-                  placeholder="Enter Metar"
-                  class="wxbriefinput"
-                  id="metarinput"
-                />
-                <button id="metarbutton" class="wxbriefbutton">Go</button>
-              </div>
-              <div id="manualtaf" class="weather-widget-container">
-                <h1 class="title">TAF Decoder</h1>
-                <span contenteditable="true" role="textbox">
-                  <input
-                    type="text"
-                    placeholder="Enter TAF"
-                    class="wxbriefinput"
-                    id="tafinput"
-                    style="max-height: min-content"
-                  />
-                </span>
-                <button id="metarbutton" class="wxbriefbutton">Go</button>
-              </div>
-              <div id="manualatis" class="weather-widget-container">
-                <h1 class="title">ATIS Decoder</h1>
-              </div>
+              <form id="manualform" class="manualform">
+                <textarea class="manualinput" id="manualinput"></textarea>
+                <button class="manualbutton" id="manualbutton">Decode Weather Brief</button>
+              </form>
             </div>
           </div>
           <div id="autocontainer">
