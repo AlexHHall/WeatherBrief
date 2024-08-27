@@ -1,9 +1,10 @@
 function randomIntFromInterval(min, max) {
-  // min and max included
+  // Return a random integer between two values
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function generateClouds() {
+  // Create cloud objects
   const container = document.getElementById("clouds");
   for (let i = 0; i < randomIntFromInterval(400, 500); i++) {
     const cloud = document.createElement("div");
@@ -19,9 +20,11 @@ function generateClouds() {
     )}s linear infinite`;
     brightness = randomIntFromInterval(245, 255);
     difference = randomIntFromInterval(0, 2);
-    cloud.style.backgroundColor = `rgb(${brightness + (Math.random() - 0.5) * difference
-      }, ${brightness + (Math.random() - 0.5) * difference}, ${brightness + (Math.random() - 0.5) * difference
-      })`;
+    cloud.style.backgroundColor = `rgb(${
+      brightness + (Math.random() - 0.5) * difference
+    }, ${brightness + (Math.random() - 0.5) * difference}, ${
+      brightness + (Math.random() - 0.5) * difference
+    })`;
     cloud.style.borderRadius = "50%";
     cloud.style.position = "absolute";
     container.appendChild(cloud);
@@ -29,6 +32,7 @@ function generateClouds() {
 }
 
 function generateRain() {
+  // Create rain objects
   const container = document.getElementById("rain");
   for (let i = 0; i < randomIntFromInterval(100, 2000); i++) {
     const rain = document.createElement("div");
@@ -51,14 +55,8 @@ function generateRain() {
 function animateClouds() {
   // change position of all clouds
   const clouds = document.querySelectorAll(".cloud");
-  /*
-    clouds.forEach(cloud => {
-        cloud.style.left = `${Math.random() * 150}%`;
-        cloud.style.top = `${Math.random() * 40}%`;
-    });
-    */
   clouds.forEach((cloud) => {
-    // animate clouds, move each cloud in a random direction and shange the shape but make it happen slowly
+    // animate clouds, move each cloud in a random direction and shange the shape slowly
     cloud.style.left = `${parseFloat(cloud.style.left) + 0.01}%`;
     // if cloud goes off the screen, reset it
     if (parseFloat(cloud.style.left) > randomIntFromInterval(100, 150)) {
@@ -81,25 +79,7 @@ function animateRain() {
 }
 
 function atisToText(atis) {
-  // convert atis to text
-  // atis is a json object
-  // "ATIS": {
-  //    "ICAO": "NZRO",
-  //    "INFO": "D",
-  //    "ISSUE_TIME": "0004",
-  //    "APPROACH": "RNP Z",
-  //    "RUNWAY": "18",
-  //    "RWY_COND": "6/6/6 DRY/DRY/DRY",
-  //    "WIND": "VRB /4KT",
-  //    "VIS": "30KM",
-  //    "CLOUD": "FEW 2000 FT OVC 2500 FT",
-  //    "TEMPERATURE": "12",
-  //    "DEWPOINT": "10",
-  //    "QNH": "1026hPa",
-  //    "2000 FT WIND": "FORECAST VRB/05KT",
-  //    "REMARKS": "ON FIRST CTC WITH NZRO TWR NOTIFY RCPT OF D"
-  //}
-  // return a string
+  // Convert ATIS information to text
   return `ATIS for ${atis["ICAO"]}.
   <br>Issued at ${atis["ISSUE_TIME"]}Z.
   <br>Approach is ${atis["APCH"]} for runway ${atis["RWY"]}.
@@ -114,6 +94,7 @@ function atisToText(atis) {
 }
 
 function generateWindRunwayWidget(runwayNum, windDir) {
+  // Generates a wind and runway direction widget
   runwayDirection = runwayNum * 10;
   console.log(runwayDirection, windDir);
 
@@ -265,6 +246,7 @@ function generateWindRunwayWidget(runwayNum, windDir) {
 }
 
 function generateCloudWidget(cloudInput) {
+  // Generates a widget that shows clouds to the user
   const cloudWidget = document.createElement("div");
   cloudWidget.classList.add("cloudWidget");
   cloudWidget.style.width = "600px";
@@ -292,12 +274,12 @@ function generateCloudWidget(cloudInput) {
   }
   // if NSC is in the input, don't generate any clouds
   if (cloudArray.includes("NSC")) {
+    console.log("NSC");
     clouds.push({
       type: "NSC",
       height: "No Significant Clouds",
-      unit: "",
+      unit: " ",
     });
-    return;
   }
   cloudsvg.innerHTML = "";
   clouds.sort((a, b) => {
@@ -373,7 +355,10 @@ function generateCloudWidget(cloudInput) {
   return cloudWidget;
 }
 
-function generateAutoAirportATISDisplay(atis, metar, taf) {
+function generateAutoAirportATISDisplay(atis) {
+  // Generates an ATIS display for the user
+  console.log(atis);
+
   const container = document.createElement("div");
   container.classList.add("autoairport-fullscreen-container");
 
@@ -424,8 +409,7 @@ function generateAutoAirportATISDisplay(atis, metar, taf) {
 }
 
 function generateAutoAirportTAFDisplay(taf) {
-  // decode the TAF
-  // TAF is a string
+  // Generates a TAF display for the user
 
   const container = document.createElement("div");
   container.classList.add("autoairport-fullscreen-container");
@@ -471,8 +455,7 @@ function generateAutoAirportTAFDisplay(taf) {
 }
 
 function generateAutoAirportMETARDisplay(metar) {
-  // decode the METAR
-  // METAR is a string
+  // Generates a METAR display for the user
   const container = document.createElement("div");
   container.classList.add("autoairport-fullscreen-container");
 
@@ -510,6 +493,7 @@ function generateAutoAirportMETARDisplay(metar) {
 }
 
 function isANumber(str) {
+  // Returns true if a string only contains numbers
   return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
@@ -537,6 +521,10 @@ const phenomona_list = {
 };
 
 function decodeTafLine(tafline) {
+  // Decodes a TAF line
+  tafline = tafline.trim();
+  tafline = tafline.replace(/\s+/g, ' ');
+
   let wx_str = "";
   let probability_str = "";
   if (tafline.split(" ")[0].substring(0, 4) == "PROB") {
@@ -582,7 +570,7 @@ function decodeTafLine(tafline) {
     for (let i = 0; i < weather_conditions.length; i++) {
       if (
         weather_conditions[i].includes("KT") &&
-        isANumber(weather_conditions[i].substring(0, 5))
+        isANumber(weather_conditions[i].substring(0, 5)) || weather_conditions[i].includes("VRB")
       ) {
         wind = weather_conditions[i];
         wind = wind.substring(0, wind.length - 2);
@@ -646,7 +634,7 @@ function decodeTafLine(tafline) {
     for (let i = 0; i < weather_conditions.length; i++) {
       if (
         weather_conditions[i].includes("KT") &&
-        isANumber(weather_conditions[i].substring(0, 5))
+        isANumber(weather_conditions[i].substring(0, 5)) || weather_conditions[i].includes("VRB")
       ) {
         wind = weather_conditions[i];
         wind = wind.substring(0, wind.length - 2);
@@ -837,6 +825,9 @@ function decodeTafLine(tafline) {
 }
 
 function decodeMetar(metar) {
+  // Decodes a METAR
+  metar = metar.trim();
+  metar = metar.replace(/\s+/g, ' ');
   var decoded_metar_str = "";
   // Break metar up by spaces
   var metar_array = metar.split(" ");
@@ -861,11 +852,19 @@ function decodeMetar(metar) {
   var wind_raw = metar_array.shift();
   var wind_str = "";
   var wind_variable = false;
+  console.log(metar_array);
   var wind_direction = wind_raw.substring(0, 3);
   var wind_speed = wind_raw.substring(3, 5);
-  if (metar_array[0].includes("V")) {
+
+  if (metar_array[0].includes("V") && !metar_array[0].includes("OVC")) {
     wind_variable = true;
-    wind_str += `Wind is variable between ${metar_array[0].substring(0, 3)} and ${metar_array[0].substring(4, 7)} from ${wind_direction} degrees true at ${wind_speed} knots. `;
+    wind_str += `Wind is variable between ${metar_array[0].substring(
+      0,
+      3
+    )} and ${metar_array[0].substring(
+      4,
+      7
+    )} from ${wind_direction} degrees true at ${wind_speed} knots. `;
     metar_array.shift();
   }
 
@@ -896,7 +895,6 @@ function decodeMetar(metar) {
     decoded_metar_str += `Visibility is ${visibility} meters. `;
   }
 
-
   // Decode the Weather
   if (weather_raw == undefined) {
     decoded_metar_str += "No significant weather. ";
@@ -920,19 +918,19 @@ function decodeMetar(metar) {
   var temperature = dewpointtemperature_raw.substring(0, 2);
   var dewpoint = dewpointtemperature_raw.substring(3, 5);
 
-
   // Decode the QNH
   if (qnh.endsWith("=")) {
     qnh = qnh.substring(0, qnh.length - 1);
   }
 
   // All that's left in the array is clouds, so decode that
+  console.log(metar_array);
   if (metar_array.length == 0) {
     decoded_metar_str += "No significant clouds. ";
   } else {
     for (let i = 0; i < metar_array.length; i++) {
       // if the cloud string ends with 3 slashes, it doesn't know if it's a towering cumulus or cumulonimbus cloud
-      var note = ""
+      var note = "";
       if (metar_array[i].endsWith("//////")) {
         // Faulty Sensor, add a note
         note += "Cloud Sensor Faulty";
@@ -974,6 +972,17 @@ function decodeMetar(metar) {
 
   console.log(metar_array);
   return decoded_metar_str;
+}
+
+function displayErrorMessage(message) {
+  const error = document.createElement("div");
+  error.classList.add("error");
+  error.innerHTML = message;
+  document.body.appendChild(error);
+  // remove the error message after 3 seconds
+  setTimeout(() => {
+    error.remove();
+  }, 3000);
 }
 
 window.onload = function () {
@@ -1047,16 +1056,153 @@ window.onload = function () {
   });
 
   const autoairportselectionform = document.getElementById("airportselection");
-  function handleForm(event) {
+  function handleAutoForm(event) {
     event.preventDefault();
     document.getElementById("airportinput").value = "";
   }
-  autoairportselectionform.addEventListener("submit", handleForm);
+  autoairportselectionform.addEventListener("submit", handleAutoForm);
+
+  const manualinputform = document.getElementById("manualform");
+  function handleManualForm(event) {
+    event.preventDefault();
+  }
+  manualinputform.addEventListener("submit", handleManualForm);
+
+  const manualbutton = document.getElementById("manualbutton");
+  manualbutton.addEventListener("click", () => {
+    // get the input from the manual form
+    const manualinput = document.getElementById("manualinput");
+    const manualinputvalue = manualinput.value;
+    var metar = "";
+    var taf = "";
+    var atis = "";
+
+    if (
+      !manualinputvalue.includes("METAR") &&
+      !manualinputvalue.includes("ATIS") &&
+      !manualinputvalue.includes("TAF")
+    )
+      return displayErrorMessage("Please enter a valid METAR, TAF, or ATIS");
+
+    if (manualinputvalue.includes("METAR")) {
+      const metarindex = manualinputvalue.indexOf("METAR");
+      // take from the METAR string to the next equals sign after it
+      metar = manualinputvalue.substring(
+        metarindex,
+        manualinputvalue.indexOf("=", metarindex)
+      );
+    }
+    if (manualinputvalue.includes("TAF")) {
+      const tafindex = manualinputvalue.indexOf("TAF");
+      // take from the TAF string to the next equals sign after it
+      taf = manualinputvalue.substring(
+        tafindex,
+        manualinputvalue.indexOf("=", tafindex)
+      );
+    }
+    if (manualinputvalue.includes("ATIS")) {
+      const atisindex = manualinputvalue.indexOf("ATIS");
+      // take from the ATIS string to the next full stop after it
+      let atis_1 = manualinputvalue.substring(
+        atisindex,
+        manualinputvalue.indexOf(".", atisindex)
+      );
+      // Find identifier of the airport
+      let identifier = atis_1.split("\n")[0].split(" ")[2];
+      // Use that to find the end of the ATIS
+      atis = manualinputvalue.substring(
+        atisindex,
+        manualinputvalue.indexOf(identifier + ".", atisindex) +
+          identifier.length +
+          1
+      );
+    }
+    // Now that we have the METAR, TAF, and ATIS, we can display them
+    const manualdisplay = document.getElementById("manualdisplay");
+    const airport = document.createElement("div");
+    airport.classList.add("autoairport");
+    const header = document.createElement("div");
+    header.classList.add("autoairportheader");
+    const hideable_div = document.createElement("div");
+    hideable_div.classList.add("dropdown-div");
+    const title = document.createElement("h2");
+    const buttonsdiv = document.createElement("div");
+    const closebutton = document.createElement("span");
+    closebutton.innerHTML = "close";
+    closebutton.classList.add("closebutton");
+    closebutton.classList.add("material-symbols-outlined");
+    closebutton.addEventListener("click", function () {
+      airport.remove();
+    });
+    const dropdownbutton = document.createElement("span");
+    dropdownbutton.innerHTML = "keyboard_arrow_up";
+    dropdownbutton.classList.add("collapsebutton");
+    dropdownbutton.classList.add("material-symbols-outlined");
+    dropdownbutton.addEventListener("click", function () {
+      const itemscontainer = airport.querySelector(".dropdown-div");
+      itemscontainer.style.display =
+        itemscontainer.style.display === "none" ? "grid" : "none";
+      dropdownbutton.innerHTML =
+        itemscontainer.style.display === "none"
+          ? "keyboard_arrow_down"
+          : "keyboard_arrow_up";
+    });
+    title.innerHTML = "Airport";
+    header.appendChild(title);
+    buttonsdiv.appendChild(dropdownbutton);
+    buttonsdiv.appendChild(closebutton);
+    header.appendChild(buttonsdiv);
+    airport.appendChild(header);
+
+    const itemscontainer = document.createElement("div");
+    itemscontainer.classList.add("autoairportcontainer");
+    if (metar !== "") {
+      const metarbox = document.createElement("div");
+      metarbox.innerHTML = metar;
+      metarbox.classList.add("autoairportinfobox");
+      metarbox.onclick = function () {
+        // remove all newlines from the METAR
+        metar = metar.replace(/\n/g, " ");
+        hideable_div.appendChild(generateAutoAirportMETARDisplay(metar));
+      };
+      itemscontainer.appendChild(metarbox);
+    }
+    if (taf !== "") {
+      const tafbox = document.createElement("div");
+      tafbox.innerText = taf;
+      tafbox.classList.add("autoairportinfobox");
+      tafbox.onclick = function () {
+        hideable_div.appendChild(generateAutoAirportTAFDisplay(taf));
+      };
+      itemscontainer.appendChild(tafbox);
+    }
+    if (atis !== "") {
+      const atisbox = document.createElement("div");
+      atisbox.innerText = atis;
+      atisbox.classList.add("autoairportinfobox");
+      atisbox.onclick = function () {
+        atis_dict = {};
+        atis_array = atis.split("\n");
+        for (let i = 0; i < atis_array.length; i++) {
+          if (!atis_array[i].includes(":")) continue;
+          atis_line = atis_array[i].split(":");
+          atis_dict[atis_line[0]] = atis_line[1].trim();
+        }
+        hideable_div.appendChild(generateAutoAirportATISDisplay(atis_dict));
+      };
+      itemscontainer.appendChild(atisbox);
+    }
+    hideable_div.appendChild(itemscontainer);
+    airport.appendChild(hideable_div);
+
+    manualdisplay.appendChild(airport);
+  });
 
   airportbutton = document.getElementById("airportbutton");
   airportbutton.addEventListener("click", () => {
     const airportInput = document.getElementById("airportinput");
-    const airportCode = airportInput.value.toUpperCase();
+    // get the airport code from the input
+    const airportCode = airportInput.value.toUpperCase().trim();
     // make a fetch request with no cors
     // include metar, taf, atis if selected
     _includeatis = autoatisbutton.classList.contains("selected")
@@ -1070,17 +1216,22 @@ window.onload = function () {
       : "false";
     fetch(
       "http://localhost:25565/api/airport/met/" +
-      airportCode +
-      "?" +
-      new URLSearchParams({
-        includemetar: _includemetar,
-        includetaf: _includetaf,
-        includeatis: _includeatis,
-      })
+        airportCode +
+        "?" +
+        new URLSearchParams({
+          includemetar: _includemetar,
+          includetaf: _includetaf,
+          includeatis: _includeatis,
+        })
     )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        if (data["error"]) {
+          console.log("woah no");
+          displayErrorMessage(data["error"]);
+          return;
+        }
         // display metar, taf, atis in 'autodisplay' div
         const autodisplay = document.getElementById("autometdisplay");
         const airport = document.createElement("div");
@@ -1148,11 +1299,7 @@ window.onload = function () {
           atis.classList.add("autoairportinfobox");
           atis.onclick = function () {
             hideable_div.appendChild(
-              generateAutoAirportATISDisplay(
-                data["ATIS"],
-                data["METAR"],
-                data["TAF"]
-              )
+              generateAutoAirportATISDisplay(data["ATIS"])
             );
           };
           itemscontainer.appendChild(atis);
