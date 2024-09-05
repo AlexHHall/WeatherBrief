@@ -1,8 +1,17 @@
+/**
+ * 
+ * @param {number} min
+ * @param {number} max 
+ * @returns a random integer between min and max.
+ */
 function randomIntFromInterval(min, max) {
   // Return a random integer between two values
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+/**
+ * Generates clouds on the screen.
+ */
 function generateClouds() {
   // Create cloud objects
   const container = document.getElementById("clouds");
@@ -31,6 +40,9 @@ function generateClouds() {
   }
 }
 
+/** 
+ * Generates rain on the screen.
+ */
 function generateRain() {
   // Create rain objects
   const container = document.getElementById("rain");
@@ -52,6 +64,9 @@ function generateRain() {
   }
 }
 
+/**
+ * Animates the clouds on the screen.
+ */
 function animateClouds() {
   // change position of all clouds
   const clouds = document.querySelectorAll(".cloud");
@@ -65,6 +80,9 @@ function animateClouds() {
   });
 }
 
+/**
+ * Animates the rain on the screen.
+ */
 function animateRain() {
   // make rain go down
   const rain = document.querySelectorAll(".rain");
@@ -78,6 +96,11 @@ function animateRain() {
   });
 }
 
+/**
+ * 
+ * @param {object} atis 
+ * @returns a string of text that represents the ATIS information.
+ */
 function atisToText(atis) {
   // Convert ATIS information to text
   return `ATIS for ${atis["ICAO"]}.
@@ -93,6 +116,12 @@ function atisToText(atis) {
   <br>Remarks: ${atis["REMARKS"]}`;
 }
 
+/**
+ * 
+ * @param {number} runwayNum Runway Number in tens of degrees magnetic
+ * @param {number} windDir Wind direction in degrees true
+ * @returns A widget that shows the wind and runway direction.
+ */
 function generateWindRunwayWidget(runwayNum, windDir) {
   // Generates a wind and runway direction widget
   runwayDirection = runwayNum * 10;
@@ -245,6 +274,11 @@ function generateWindRunwayWidget(runwayNum, windDir) {
   return windWidget;
 }
 
+/**
+ * 
+ * @param {string} cloudInput A string that represents the clouds
+ * @returns A widget that shows the clouds to the user.
+ */
 function generateCloudWidget(cloudInput) {
   // Generates a widget that shows clouds to the user
   const cloudWidget = document.createElement("div");
@@ -355,6 +389,11 @@ function generateCloudWidget(cloudInput) {
   return cloudWidget;
 }
 
+/**
+ * 
+ * @param {object} atis is an object that contains ATIS information. 
+ * @returns a widget that displays the ATIS information.
+ */
 function generateAutoAirportATISDisplay(atis) {
   // Generates an ATIS display for the user
   console.log(atis);
@@ -408,6 +447,11 @@ function generateAutoAirportATISDisplay(atis) {
   return container;
 }
 
+/**
+ * 
+ * @param {string} taf is a string that represents the TAF information. 
+ * @returns a widget that displays the TAF information.
+ */
 function generateAutoAirportTAFDisplay(taf) {
   // Generates a TAF display for the user
 
@@ -454,6 +498,11 @@ function generateAutoAirportTAFDisplay(taf) {
   return container;
 }
 
+/**
+ * 
+ * @param {metar} metar is a string that represents the METAR information. 
+ * @returns A widget that displays the METAR information.
+ */
 function generateAutoAirportMETARDisplay(metar) {
   // Generates a METAR display for the user
   const container = document.createElement("div");
@@ -492,12 +541,17 @@ function generateAutoAirportMETARDisplay(metar) {
   return container;
 }
 
+/**
+ * 
+ * @param {string} str 
+ * @returns true if the string is a number, false otherwise.
+ */
 function isANumber(str) {
   // Returns true if a string only contains numbers
   return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
-const phenomona_list = {
+const phenomonaList = {
   SH: "Showers",
   TS: "Thunderstorms",
   DZ: "Drizzle",
@@ -520,10 +574,15 @@ const phenomona_list = {
   DS: "Duststorm",
 };
 
+/**
+ * 
+ * @param {string} tafline a line from a TAF report 
+ * @returns a string that represents the decoded TAF line.
+ */
 function decodeTafLine(tafline) {
   // Decodes a TAF line
   tafline = tafline.trim();
-  tafline = tafline.replace(/\s+/g, ' ');
+  tafline = tafline.replace(/\s+/g, " ");
 
   let wx_str = "";
   let probability_str = "";
@@ -569,8 +628,9 @@ function decodeTafLine(tafline) {
     var vis;
     for (let i = 0; i < weather_conditions.length; i++) {
       if (
-        weather_conditions[i].includes("KT") &&
-        isANumber(weather_conditions[i].substring(0, 5)) || weather_conditions[i].includes("VRB")
+        (weather_conditions[i].includes("KT") &&
+          isANumber(weather_conditions[i].substring(0, 5))) ||
+        weather_conditions[i].includes("VRB")
       ) {
         wind = weather_conditions[i];
         wind = wind.substring(0, wind.length - 2);
@@ -613,7 +673,7 @@ function decodeTafLine(tafline) {
           for (let j = 0; j < weather_conditions[i].length; j += 2) {
             console.log(weather_conditions[i].substring(j, j + 2));
             wx_str +=
-              phenomona_list[weather_conditions[i].substring(j, j + 2)] + " ";
+              phenomonaList[weather_conditions[i].substring(j, j + 2)] + " ";
           }
           wx_str += ".";
         }
@@ -633,8 +693,9 @@ function decodeTafLine(tafline) {
     var vis;
     for (let i = 0; i < weather_conditions.length; i++) {
       if (
-        weather_conditions[i].includes("KT") &&
-        isANumber(weather_conditions[i].substring(0, 5)) || weather_conditions[i].includes("VRB")
+        (weather_conditions[i].includes("KT") &&
+          isANumber(weather_conditions[i].substring(0, 5))) ||
+        weather_conditions[i].includes("VRB")
       ) {
         wind = weather_conditions[i];
         wind = wind.substring(0, wind.length - 2);
@@ -677,7 +738,7 @@ function decodeTafLine(tafline) {
           for (let j = 0; j < weather_conditions[i].length; j += 2) {
             console.log(weather_conditions[i].substring(j, j + 2));
             wx_str +=
-              phenomona_list[weather_conditions[i].substring(j, j + 2)] + " ";
+              phenomonaList[weather_conditions[i].substring(j, j + 2)] + " ";
           }
           wx_str += ". ";
         }
@@ -774,7 +835,7 @@ function decodeTafLine(tafline) {
       }
       weather = weather.substring(1);
       for (let i = 0; i < weather.length; i += 2) {
-        wx_str += phenomona_list[weather.substring(i, i + 2)] + " ";
+        wx_str += phenomonaList[weather.substring(i, i + 2)] + " ";
       }
       wx_str = wx_str.trim();
       wx_str += ".";
@@ -824,10 +885,15 @@ function decodeTafLine(tafline) {
   }
 }
 
+/**
+ * 
+ * @param {string} metar a string that represents the METAR information.
+ * @returns a string that represents the decoded METAR information.
+ */
 function decodeMetar(metar) {
   // Decodes a METAR
   metar = metar.trim();
-  metar = metar.replace(/\s+/g, ' ');
+  metar = metar.replace(/\s+/g, " ");
   var decoded_metar_str = "";
   // Break metar up by spaces
   var metar_array = metar.split(" ");
@@ -909,7 +975,7 @@ function decodeMetar(metar) {
       weather = weather.substring(1);
     }
     for (let i = 0; i < weather.length; i += 2) {
-      decoded_metar_str += phenomona_list[weather.substring(i, i + 2)] + " ";
+      decoded_metar_str += phenomonaList[weather.substring(i, i + 2)] + " ";
     }
     decoded_metar_str += ". ";
   }
@@ -974,6 +1040,11 @@ function decodeMetar(metar) {
   return decoded_metar_str;
 }
 
+/**
+ * 
+ * @param {string} message a string that represents an error message.
+ * Displays an error message to the user. 
+ */
 function displayErrorMessage(message) {
   const error = document.createElement("div");
   error.classList.add("error");
@@ -985,6 +1056,10 @@ function displayErrorMessage(message) {
   }, 3000);
 }
 
+/**
+ * Runs when the window is loaded.
+ * Contains all the event listeners for the buttons and forms.
+ */
 window.onload = function () {
   var cloudsAnimation;
   var rainAnimation;
